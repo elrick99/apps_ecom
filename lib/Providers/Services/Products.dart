@@ -118,7 +118,7 @@ class Products with ChangeNotifier {
         categorie: 3,
         sousCategorie: 9),
     Product(
-        id: 6,
+        id: 7,
         title: 'Parfumn Hello',
         description: 'Meilleur Prix',
         price: 470.90,
@@ -137,7 +137,7 @@ class Products with ChangeNotifier {
         categorie: 4,
         sousCategorie: 10),
     Product(
-        id: 7,
+        id: 8,
         title: 'Parfumn Hella ',
         description: 'Synthétique Une nouvelle version de nos chaussures',
         price: 209.99,
@@ -176,7 +176,7 @@ class Products with ChangeNotifier {
         categorie: 5,
         sousCategorie: 6),
     Product(
-        id: 8,
+        id: 10,
         title: 'Ballerine',
         description: 'collection de Nike dans notre catalogue de Baskets',
         price: 179.95,
@@ -195,7 +195,7 @@ class Products with ChangeNotifier {
         categorie: 3,
         sousCategorie: 5),
     Product(
-        id: 10,
+        id: 11,
         title: 'Tee-Shirt',
         description: 'asket nike air max 95 og.la basket nike air max',
         price: 151.05,
@@ -227,7 +227,7 @@ class Products with ChangeNotifier {
   List<Product> get favoriteItems =>
       _items.where((prodItem) => prodItem.isFavorite).toList();
 
-  Product findById(String id) {
+  Product findById(int id) {
     return _items.firstWhere((prod) => prod.id == id);
   }
 

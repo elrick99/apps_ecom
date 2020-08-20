@@ -1,4 +1,6 @@
+import 'package:apps_ecom/Providers/Services/Categories.dart';
 import 'package:apps_ecom/Providers/Services/Products.dart';
+import 'package:apps_ecom/Screens/Details_Screen.dart';
 import 'package:apps_ecom/Widgets/Article_Home.dart';
 import 'package:apps_ecom/Widgets/BottomBar.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +18,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(
           value: Products(),
         ),
+        ChangeNotifierProvider.value(
+          value: Categories(),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -26,6 +31,7 @@ class MyApp extends StatelessWidget {
         ),
         // home: BottomBar(),
         home: ArticleScreen(),
+        routes: {'/detail': (context) => DetailsScreen()},
       ),
     );
   }
