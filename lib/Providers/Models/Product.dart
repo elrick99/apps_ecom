@@ -8,7 +8,7 @@ class Product with ChangeNotifier {
   final String description;
   final double price;
   final Etat etat;
-  final bool isFavorite;
+  bool isFavorite;
   final int point;
   final String picture;
   final String picture1;
@@ -31,8 +31,13 @@ class Product with ChangeNotifier {
       @required this.picture1,
       @required this.picture2,
       @required this.picture3,
-      @required this.taille,
+      this.taille,
       @required this.marque,
       @required this.categorie,
       @required this.sousCategorie});
+
+  void toggleFavoriteStatus() {
+    isFavorite = !isFavorite;
+    notifyListeners();
+  }
 }

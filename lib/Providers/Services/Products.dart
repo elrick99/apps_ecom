@@ -4,6 +4,25 @@ import 'package:flutter/material.dart';
 class Products with ChangeNotifier {
   List<Product> _items = [
     Product(
+        id: 0,
+        title: 'Tetine',
+        description: 'Meilleur Prix',
+        price: 470.90,
+        etat: Etat.Neuf,
+        point: 4,
+        picture:
+            'https://www.cdiscount.com/pdt2/1/7/5/1/700x700/mp20720175/rw/basket-nike-air-max-97-lx-noir-av1165-001.jpg',
+        picture1:
+            'https://images.fr.shopping.rakuten.com/photo/basket-nike-air-max-97-921826-013-1230178019_ML.jpg',
+        picture2:
+            'https://images.fr.shopping.rakuten.com/photo/basket-nike-air-max-97-qs-at5458-002-1360318653_ML.jpg',
+        picture3:
+            'https://downtownstock.com/40283-large_default/nike-basket-nike-w-air-max-97-lx-ar7621-001.jpg',
+        taille: '39',
+        marque: 'Nike',
+        categorie: 1,
+        sousCategorie: 12),
+    Product(
         id: 1,
         title: 'Pantalon',
         description: 'Meilleur Prix',
