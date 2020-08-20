@@ -1,7 +1,11 @@
 import 'package:apps_ecom/Providers/Models/Product.dart';
 import 'package:apps_ecom/Providers/Services/Categories.dart';
 import 'package:apps_ecom/Providers/Services/Products.dart';
+import 'package:apps_ecom/Screens/Commandes_Screen.dart';
 import 'package:apps_ecom/Screens/Details_Screen.dart';
+import 'package:apps_ecom/Screens/Discussions_Screen.dart';
+import 'package:apps_ecom/Screens/Favoris.dart';
+import 'package:apps_ecom/Screens/Notifications_Screen.dart';
 import 'package:apps_ecom/Screens/Profil_Screen.dart';
 import 'package:apps_ecom/Widgets/Article_Home.dart';
 import 'package:apps_ecom/Widgets/BottomBar.dart';
@@ -39,9 +43,12 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        // home: BottomBar(),
-        home: ProfilScreen(),
-        routes: {'/detail': (context) => DetailsScreen()},
+        home: BottomBar(),
+        // home: Favoris(),
+        routes: {
+          '/detail': (context) => DetailsScreen(),
+          '/profil': (context) => ProfilScreen()
+        },
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:apps_ecom/Screens/Favoris.dart';
 import 'package:apps_ecom/Screens/Home_Screen.dart';
 import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,7 @@ class _BottomBarState extends State<BottomBar> {
     HomeScreen(),
     Text("Text 2"),
     Text("Text 3"),
-    Text("Text 4"),
+    Favoris(),
     Text("Text 5"),
   ];
   int _index = 0;
@@ -26,7 +27,7 @@ class _BottomBarState extends State<BottomBar> {
         body: page[_index],
         bottomNavigationBar: FloatingNavbar(
           backgroundColor: Colors.white,
-          selectedBackgroundColor: Color(0xFFd7143a),
+          selectedBackgroundColor: Color(0xFFee7b77),
           selectedItemColor: Colors.white,
           unselectedItemColor: Color(0xff292929),
           onTap: (int val) => setState(() => _index = val),

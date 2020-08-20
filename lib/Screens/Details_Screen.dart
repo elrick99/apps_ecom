@@ -4,16 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class DetailsScreen extends StatelessWidget {
+  final int id;
+
+  const DetailsScreen({Key key, this.id}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     var productId = ModalRoute.of(context).settings.arguments as int;
     final loadedProduct =
-        Provider.of<Products>(context, listen: false).findById(productId);
+        Provider.of<Products>(context, listen: false).findById(this.id);
     final loadedCategrie = Provider.of<Categories>(context, listen: false)
         .findById(loadedProduct.categorie);
 
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Color(0xFFee7b77)),
         backgroundColor: Colors.white,
         title: Text(
           loadedProduct.title,

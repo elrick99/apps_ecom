@@ -1,5 +1,6 @@
 import 'package:apps_ecom/Providers/Models/Product.dart';
 import 'package:apps_ecom/Providers/Services/Products.dart';
+import 'package:apps_ecom/Screens/Details_Screen.dart';
 import 'package:apps_ecom/Widgets/Article_Item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,8 +22,10 @@ class ArticleGridHome extends StatelessWidget {
         return ChangeNotifierProvider.value(
           value: dataProduct[product.id],
           child: InkWell(
-            onTap: () =>
-                Navigator.pushNamed(context, '/detail', arguments: product.id),
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => DetailsScreen(id: product.id))),
             child: ArticleItem(),
           ),
         );
