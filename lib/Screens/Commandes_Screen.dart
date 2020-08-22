@@ -7,6 +7,7 @@ class CommandesScreen extends StatelessWidget {
       length: 2,
       child: Scaffold(
           appBar: AppBar(
+            backgroundColor: Colors.white,
             iconTheme: IconThemeData(color: Color(0xFFee7b77)),
             centerTitle: true,
             // leading: Icon(Icons.person_outline),

@@ -6,10 +6,18 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ArticleScreen extends StatelessWidget {
+  final Function dataprod;
+
+  const ArticleScreen({Key key, this.dataprod}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    print('/////////RELOAD/////////');
+    // dataprod.call();
+    print(dataprod);
     final providerProducts = Provider.of<Products>(context);
     final dataProduct = providerProducts.items;
+    // final date = dataprod.call();
+    // print(date);
     return Scaffold(
       body: Container(
         margin: EdgeInsets.all(10.0),

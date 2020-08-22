@@ -10,6 +10,8 @@ class ProfilScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey[250],
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Color(0xFFee7b77)),
+        backgroundColor: Colors.white,
         title: Text(
           'Mon Compte',
           style: TextStyle(color: Colors.black),

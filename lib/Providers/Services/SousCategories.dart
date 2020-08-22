@@ -450,9 +450,9 @@ class SousCategories with ChangeNotifier {
   // List<Categories> get favoriteItems =>
   //     _items.where((prodItem) => prodItem.isFavorite).toList();
 
-  // Categories findById(String id) {
-  //   return _items.firstWhere((prod) => prod.id == id);
-  // }
+  SousCat findById(int id) {
+    return _items.firstWhere((prod) => prod.id == id);
+  }
 
   // void showFavoritesOnly() {
   //   _showFavotitesOnly = true;
