@@ -1,3 +1,7 @@
+import 'package:apps_ecom/Screens/Commandes_Screen.dart';
+import 'package:apps_ecom/Screens/Discussions_Screen.dart';
+import 'package:apps_ecom/Screens/Favoris.dart';
+import 'package:apps_ecom/Screens/Notifications_Screen.dart';
 import 'package:flutter/material.dart';
 
 class ProfilScreen extends StatelessWidget {
@@ -94,7 +98,15 @@ class ProfilScreen extends StatelessWidget {
                         color: Colors.black,
                       ),
                     ),
-                    Icon(Icons.arrow_forward_ios, color: Colors.grey)
+                    IconButton(
+                      icon: Icon(Icons.arrow_forward_ios, color: Colors.grey),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => DiscussionScreen()));
+                      },
+                    )
                   ],
                 ),
               ),
@@ -121,7 +133,15 @@ class ProfilScreen extends StatelessWidget {
                         color: Colors.black,
                       ),
                     ),
-                    Icon(Icons.arrow_forward_ios, color: Colors.grey)
+                    IconButton(
+                      icon: Icon(Icons.arrow_forward_ios, color: Colors.grey),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => NotificationsScreen()));
+                      },
+                    )
                   ],
                 ),
               ),
@@ -160,7 +180,11 @@ class ProfilScreen extends StatelessWidget {
                         color: Colors.black,
                       ),
                     ),
-                    Icon(Icons.arrow_forward_ios, color: Colors.grey)
+                    IconButton(
+                      icon: Icon(Icons.arrow_forward_ios, color: Colors.grey),
+                      onPressed: () => Navigator.push(context,
+                          MaterialPageRoute(builder: (_) => CommandesScreen())),
+                    )
                   ],
                 ),
               ),
@@ -187,7 +211,11 @@ class ProfilScreen extends StatelessWidget {
                         color: Colors.black,
                       ),
                     ),
-                    Icon(Icons.arrow_forward_ios, color: Colors.grey)
+                    IconButton(
+                      icon: Icon(Icons.arrow_forward_ios, color: Colors.grey),
+                      onPressed: () => Navigator.push(context,
+                          MaterialPageRoute(builder: (_) => Favoris())),
+                    )
                   ],
                 ),
               ),

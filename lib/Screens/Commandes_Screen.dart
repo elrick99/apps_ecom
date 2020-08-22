@@ -7,8 +7,9 @@ class CommandesScreen extends StatelessWidget {
       length: 2,
       child: Scaffold(
           appBar: AppBar(
+            iconTheme: IconThemeData(color: Color(0xFFee7b77)),
             centerTitle: true,
-            leading: Icon(Icons.person_outline),
+            // leading: Icon(Icons.person_outline),
             title: Text(
               'Mes Commandes',
               style: TextStyle(color: Colors.black, fontSize: 16.0),
@@ -33,12 +34,12 @@ class CommandesScreen extends StatelessWidget {
                       ),
                     ]),
                 preferredSize: Size.fromHeight(50.0)),
-            actions: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(right: 16.0),
-                child: Icon(Icons.add_alert),
-              ),
-            ],
+            // actions: <Widget>[
+            //   Padding(
+            //     padding: const EdgeInsets.only(right: 16.0),
+            //     child: Icon(Icons.add_alert),
+            //   ),
+            // ],
           ),
           body: TabBarView(
             children: <Widget>[

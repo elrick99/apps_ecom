@@ -31,7 +31,7 @@ class ArticleItem extends StatelessWidget {
                               onPressed: () {
                                 product.toggleFavoriteStatus();
                               },
-                              color: Theme.of(context).accentColor),
+                              color: Color(0xFFee7b77)),
                         ),
                       ),
                     ],

@@ -19,6 +19,7 @@ class _FavorisState extends State<Favoris> {
 
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Color(0xFFee7b77)),
         backgroundColor: Colors.white,
         title: Text(
           'Mes Favoris',

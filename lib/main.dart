@@ -7,6 +7,7 @@ import 'package:apps_ecom/Screens/Discussions_Screen.dart';
 import 'package:apps_ecom/Screens/Favoris.dart';
 import 'package:apps_ecom/Screens/Notifications_Screen.dart';
 import 'package:apps_ecom/Screens/Profil_Screen.dart';
+import 'package:apps_ecom/Screens/Search_Screen.dart';
 import 'package:apps_ecom/Widgets/Article_Home.dart';
 import 'package:apps_ecom/Widgets/BottomBar.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,6 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         themeMode: ThemeMode.system,
-
         theme: ThemeData(
           iconTheme: IconThemeData(
             color: Color(0xFFee7b77),
@@ -43,8 +43,8 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: BottomBar(),
-        // home: Favoris(),
+        // home: BottomBar(),
+        home: SearchBar(),
         routes: {
           '/detail': (context) => DetailsScreen(),
           '/profil': (context) => ProfilScreen()
