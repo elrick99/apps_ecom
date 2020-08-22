@@ -1,5 +1,6 @@
 import 'package:apps_ecom/Screens/Favoris.dart';
 import 'package:apps_ecom/Screens/Home_Screen.dart';
+import 'package:apps_ecom/Screens/Search_Screen.dart';
 import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -11,10 +12,10 @@ class BottomBar extends StatefulWidget {
 class _BottomBarState extends State<BottomBar> {
   List<Widget> page = [
     HomeScreen(),
-    Text("Text 2"),
+    SearchBar(),
     Text("Text 3"),
     Favoris(),
-    Text("Text 5"),
+    Text('Text 5'),
   ];
   int _index = 0;
   @override

@@ -15,7 +15,6 @@ import 'Screens/Home_Screen.dart';
 
 import 'package:provider/provider.dart';
 
-
 void main() {
   runApp(MyApp());
 }
@@ -46,15 +45,13 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        // home: BottomBar(),
-        home: SearchBar(),
+        home: BottomBar(),
+        // home: SearchBar(),
         routes: {
           '/detail': (context) => DetailsScreen(),
           '/profil': (context) => ProfilScreen()
         },
       ),
-
     );
   }
 }
-
