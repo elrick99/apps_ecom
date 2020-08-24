@@ -1,4 +1,10 @@
+import 'package:apps_ecom/Screens/Commandes_Screen.dart';
+import 'package:apps_ecom/Screens/Discussions_Screen.dart';
+import 'package:apps_ecom/Screens/Favoris.dart';
+import 'package:apps_ecom/Screens/Notifications_Screen.dart';
 import 'package:flutter/material.dart';
+
+import 'Boutique_Screen.dart';
 
 class ProfilScreen extends StatelessWidget {
   @override
@@ -6,6 +12,8 @@ class ProfilScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey[250],
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Color(0xFFee7b77)),
+        backgroundColor: Colors.white,
         title: Text(
           'Mon Compte',
           style: TextStyle(color: Colors.black),
@@ -94,7 +102,15 @@ class ProfilScreen extends StatelessWidget {
                         color: Colors.black,
                       ),
                     ),
-                    Icon(Icons.arrow_forward_ios, color: Colors.grey)
+                    IconButton(
+                      icon: Icon(Icons.arrow_forward_ios, color: Colors.grey),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => DiscussionScreen()));
+                      },
+                    )
                   ],
                 ),
               ),
@@ -121,7 +137,15 @@ class ProfilScreen extends StatelessWidget {
                         color: Colors.black,
                       ),
                     ),
-                    Icon(Icons.arrow_forward_ios, color: Colors.grey)
+                    IconButton(
+                      icon: Icon(Icons.arrow_forward_ios, color: Colors.grey),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => NotificationsScreen()));
+                      },
+                    )
                   ],
                 ),
               ),
@@ -160,7 +184,11 @@ class ProfilScreen extends StatelessWidget {
                         color: Colors.black,
                       ),
                     ),
-                    Icon(Icons.arrow_forward_ios, color: Colors.grey)
+                    IconButton(
+                      icon: Icon(Icons.arrow_forward_ios, color: Colors.grey),
+                      onPressed: () => Navigator.push(context,
+                          MaterialPageRoute(builder: (_) => CommandesScreen())),
+                    )
                   ],
                 ),
               ),
@@ -187,7 +215,11 @@ class ProfilScreen extends StatelessWidget {
                         color: Colors.black,
                       ),
                     ),
-                    Icon(Icons.arrow_forward_ios, color: Colors.grey)
+                    IconButton(
+                      icon: Icon(Icons.arrow_forward_ios, color: Colors.grey),
+                      onPressed: () => Navigator.push(context,
+                          MaterialPageRoute(builder: (_) => Favoris())),
+                    )
                   ],
                 ),
               ),
@@ -201,33 +233,36 @@ class ProfilScreen extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'Mea Boutique',
+                  'Ma Boutique',
                   textAlign: TextAlign.start,
                   style: TextStyle(color: Colors.grey, fontSize: 20),
                 ),
               ),
             ),
-            Container(
-              height: MediaQuery.of(context).size.height / 10,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(color: Colors.white),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Icon(
-                      Icons.card_giftcard,
-                      color: Colors.black,
-                    ),
-                    Text(
-                      'Creer Ma Boutique',
-                      style: TextStyle(
+            InkWell(
+             onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (_)=>BoutiqueScreen())),
+              child: Container(
+                height: MediaQuery.of(context).size.height / 10,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(color: Colors.white),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Icon(
+                        Icons.card_giftcard,
                         color: Colors.black,
                       ),
-                    ),
-                    Icon(Icons.arrow_forward_ios, color: Colors.grey)
-                  ],
+                      Text(
+                        'Creer Ma Boutique',
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
+                      ),
+                      Icon(Icons.arrow_forward_ios, color: Colors.grey)
+                    ],
+                  ),
                 ),
               ),
             ),

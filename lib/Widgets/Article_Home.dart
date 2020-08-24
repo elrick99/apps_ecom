@@ -2,14 +2,23 @@ import 'package:apps_ecom/Providers/Models/Product.dart';
 import 'package:apps_ecom/Providers/Services/Products.dart';
 import 'package:apps_ecom/Screens/Details_Screen.dart';
 import 'package:apps_ecom/Widgets/Artcle_Grid_Home.dart';
+import 'package:apps_ecom/Widgets/Footer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ArticleScreen extends StatelessWidget {
+  final Function dataprod;
+
+  const ArticleScreen({Key key, this.dataprod}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    print('/////////RELOAD/////////');
+    // dataprod.call();
+    print(dataprod);
     final providerProducts = Provider.of<Products>(context);
     final dataProduct = providerProducts.items;
+    // final date = dataprod.call();
+    // print(date);
     return Scaffold(
       body: Container(
         margin: EdgeInsets.all(10.0),
@@ -49,7 +58,17 @@ class ArticleScreen extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              ArticleGridHome()
+              ArticleGridHome(),
+              SizedBox(
+                height: 20,
+              ),
+              Footer(),
+              // Container(
+              //   height: 100,
+              //   width: 200,
+              //   color: Colors.red,
+              // )
+              
             ],
           ),
         ),

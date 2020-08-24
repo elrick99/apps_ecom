@@ -24,7 +24,7 @@ class Categories with ChangeNotifier {
         id: 6,
         title: 'Accesoires',
         image:
-            'https://lh3.googleusercontent.com/proxy/nhp5OKh6Gt5X0JuOWD-eS-K2fBP0RXP-I0QNBxqbQ-pzRAG6QJ62MbZ6DRffy5ij5Nu_RDXiDT6CY8ifB0b6j_QbG9LHe39Ir95ReQ-My5KGaYXFWj68siQnBG2qftuuNJKaT0JOL7uvfVXcyG0HWVMoNtRecu60qH7hUqS1VKPsvVKUvcUqIgnVk7PP9FKExz8',
+            'https://www.grossiste-en-ligne.com/27121-large_default/magnifique-blouse-camel-col-dechire-a-la-mode-vetement-femme.jpg',
       ),
       SousCat(
         id: 7,

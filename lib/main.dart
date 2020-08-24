@@ -1,19 +1,23 @@
 import 'package:apps_ecom/Providers/Models/Product.dart';
 import 'package:apps_ecom/Providers/Services/Categories.dart';
 import 'package:apps_ecom/Providers/Services/Products.dart';
+import 'package:apps_ecom/Providers/Services/SousCategories.dart';
 import 'package:apps_ecom/Screens/Commandes_Screen.dart';
 import 'package:apps_ecom/Screens/Details_Screen.dart';
 import 'package:apps_ecom/Screens/Discussions_Screen.dart';
 import 'package:apps_ecom/Screens/Favoris.dart';
+import 'package:apps_ecom/Screens/Mes_Retours_Screen.dart';
 import 'package:apps_ecom/Screens/Notifications_Screen.dart';
 import 'package:apps_ecom/Screens/Profil_Screen.dart';
+import 'package:apps_ecom/Screens/Search_Screen.dart';
 import 'package:apps_ecom/Widgets/Article_Home.dart';
 import 'package:apps_ecom/Widgets/BottomBar.dart';
+import 'package:apps_ecom/Widgets/Footer.dart';
 import 'package:flutter/material.dart';
 import 'Screens/Home_Screen.dart';
-
 import 'package:provider/provider.dart';
 
+import 'Screens/Reglages_Screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -30,12 +34,14 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(
           value: Categories(),
         ),
+        ChangeNotifierProvider.value(
+          value: SousCategories(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         themeMode: ThemeMode.system,
-
         theme: ThemeData(
           iconTheme: IconThemeData(
             color: Color(0xFFee7b77),
@@ -47,14 +53,18 @@ class MyApp extends StatelessWidget {
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: BottomBar(),
-        // home: Favoris(),
+        // home: SearchBar(),
         routes: {
           '/detail': (context) => DetailsScreen(),
-          '/profil': (context) => ProfilScreen()
+          '/profil': (context) => ProfilScreen(),
+          '/Discussions_Screen':(context)=>DiscussionScreen(),
+          '/Notifications_Screen':(context)=>NotificationsScreen(),
+          '/Commandes_Screen':(context)=>CommandesScreen(),
+          '/Mes_Retours_Screen':(context)=>MesRetourScreen(),
+          '/Reglages_Screen':(context)=>ReglageScreen(),
+
         },
       ),
-
     );
   }
 }
-

@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 
-class CommandesScreen extends StatelessWidget {
+class MesRetourScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
           appBar: AppBar(
-            backgroundColor: Colors.white,
-            iconTheme: IconThemeData(color: Color(0xFFee7b77)),
             centerTitle: true,
-            // leading: Icon(Icons.person_outline),
+            leading: Icon(Icons.person_outline),
             title: Text(
-              'Mes Commandes',
+              'Mes Retours',
               style: TextStyle(color: Colors.black, fontSize: 16.0),
             ),
             bottom: PreferredSize(
@@ -35,12 +33,12 @@ class CommandesScreen extends StatelessWidget {
                       ),
                     ]),
                 preferredSize: Size.fromHeight(50.0)),
-            // actions: <Widget>[
-            //   Padding(
-            //     padding: const EdgeInsets.only(right: 16.0),
-            //     child: Icon(Icons.add_alert),
-            //   ),
-            // ],
+            actions: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(right: 16.0),
+                child: Icon(Icons.add_alert),
+              ),
+            ],
           ),
           body: TabBarView(
             children: <Widget>[

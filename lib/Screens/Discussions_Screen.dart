@@ -5,8 +5,10 @@ class DiscussionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Color(0xFFee7b77)),
         title: Text(
-          'Mes',
+          'Mes Discussions',
           style: TextStyle(color: Colors.black),
         ),
       ),
@@ -21,6 +23,7 @@ class DiscussionScreen extends StatelessWidget {
               Icon(
                 Icons.mode_comment,
                 size: 80,
+                color: Color(0xFFee7b77),
               ),
               Text('Aucune Discussions')
             ],
