@@ -3,6 +3,7 @@ import 'package:apps_ecom/Providers/Services/Categories.dart';
 import 'package:apps_ecom/Providers/Services/Products.dart';
 import 'package:apps_ecom/Providers/Services/SousCategories.dart';
 import 'package:apps_ecom/Screens/Details_Screen.dart';
+import 'package:apps_ecom/Screens/ListArticle.dart';
 import 'package:apps_ecom/Screens/Profil_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart' as english_words;
@@ -22,6 +23,7 @@ class SearchBar extends StatelessWidget {
     return DefaultTabController(
       length: dataCategories.length,
       child: Scaffold(
+        backgroundColor: Colors.grey[200],
         appBar: AppBar(
           iconTheme: IconThemeData(color: Color(0xFFee7b77)),
           backgroundColor: Colors.white,
@@ -60,9 +62,57 @@ class SearchBar extends StatelessWidget {
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
                 child: ListView.builder(
+                    scrollDirection: Axis.vertical,
                     itemCount: e.sousCats.length,
                     itemBuilder: (_, index) {
-                      return Text(e.sousCats[index].title);
+                      return InkWell(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (_)=>ListArticle(id: e.sousCats[index].id,)));
+                          
+                        },
+                                              child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                              height: MediaQuery.of(context).size.height / 6,
+                              width: MediaQuery.of(context).size.width,
+                              decoration: BoxDecoration(color: Colors.white),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                      child: Container(
+                                    // color: Colors.red,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        e.sousCats[index].title,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20),
+                                      ),
+                                    ),
+                                  )),
+                                  Expanded(
+                                      child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 30.0,
+                                        right: 30.0,
+                                        top: 8.0,
+                                        bottom: 8.0),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          color: Colors.grey[200],
+                                          image: DecorationImage(
+                                              image: NetworkImage(
+                                                  e.sousCats[index].image),
+                                              fit: BoxFit.cover),
+                                          borderRadius:
+                                              BorderRadius.circular(100)),
+                                    ),
+                                  ))
+                                ],
+                              )),
+                        ),
+                      );
                     })))
           ],
         ),
