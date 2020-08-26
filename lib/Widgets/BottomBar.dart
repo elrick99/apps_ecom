@@ -39,9 +39,10 @@ class _BottomBarState extends State<BottomBar> {
           currentIndex: _index,
           items: [
             FloatingNavbarItem(
-                icon: 
+                icon: Icon(
                   Icons.home,
-                  //color: (_index == 0) ? Colors.white : Colors.black,
+                  color: (_index == 0) ? Colors.white : Colors.black,
+                ),
                 title: ''),
             FloatingNavbarItem(
                 icon: Icon(
