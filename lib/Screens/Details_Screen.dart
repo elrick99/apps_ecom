@@ -60,34 +60,45 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     flex: 3,
                     child: Container(
                         height: MediaQuery.of(context).size.height / 8,
-                        child: MaterialButton(
-                          child: Center(
-                            child: Consumer<Cart>(
-                              builder: (BuildContext context, cartData, ch) {
-                                Iterable<bool> vre = cart.items.values.map(
-                                    (e) => e.product.id == loadedProduct.id);
-                                return vre.contains(true)
-                                    ? Text(
+                        child: Consumer<Cart>(
+                            builder: (BuildContext context, cartData, ch) {
+                          Iterable<bool> vre = cart.items.values
+                              .map((e) => e.product.id == loadedProduct.id);
+                          return vre.contains(true)
+                              ? MaterialButton(
+                                  color: Color(0xFF00b169).withOpacity(1),
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (_) => CartScreen()));
+                                  },
+                                  child: Center(
+                                    child: Center(
+                                      child: Text(
                                         'Acceder au Panier',
                                         style: TextStyle(
                                             color: Colors.white, fontSize: 20),
-                                      )
-                                    : Text(
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              : MaterialButton(
+                                  onPressed: () {
+                                    cart.addItem(loadedProduct.id.toString(),
+                                        loadedProduct.price, loadedProduct);
+                                  },
+                                  child: Center(
+                                    child: Center(
+                                      child: Text(
                                         'Ajouter au Panier',
                                         style: TextStyle(
                                             color: Colors.white, fontSize: 20),
-                                      );
-                              }
-                              // (cartData.items.isEmpty)
-
-                              ,
-                            ),
-                          ),
-                          onPressed: () {
-                            cart.addItem(loadedProduct.id.toString(),
-                                loadedProduct.price, loadedProduct);
-                          },
-                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                        }),
                         color: Color(0xFF00b169))),
                 Expanded(
                     child: Container(
@@ -249,25 +260,50 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         children: [
                           Row(
                             children: [
-                              Text('Ref. produit: '),
-                              Text('123456789')
+                              Text(
+                                'Ref. produit: ',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 16),
+                              ),
+                              Text(
+                                '123456789',
+                                style: TextStyle(fontSize: 16),
+                              )
                             ],
                           ),
                           Row(
                             children: [
-                              Text('Couleur: '),
-                              Text('Kaki'),
+                              Text(
+                                'Couleur: ',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 16),
+                              ),
+                              Text(
+                                'Kaki',
+                                style: TextStyle(fontSize: 16),
+                              ),
                             ],
                           ),
                           Row(
                             children: [
-                              Text('Etat: '),
-                              Text('Neuf'),
+                              Text(
+                                'Etat: ',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 16),
+                              ),
+                              Text(
+                                'Neuf',
+                                style: TextStyle(fontSize: 16),
+                              ),
                             ],
                           ),
                           Row(
                             children: [
-                              Text('Taille: '),
+                              Text(
+                                'Taille: ',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 16),
+                              ),
                               Text('XXL'),
                             ],
                           ),

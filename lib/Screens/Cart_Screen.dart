@@ -62,36 +62,38 @@ class _CartScreenState extends State<CartScreen> {
     )
   ];
 
-  int _currentPage = 0;
-  PageController _pageController = PageController(
-    initialPage: 0,
-  );
+  // int _currentPage = 0;
+  // PageController _pageController = PageController(
+  //   initialPage: 0,
+  // );
 
-  @override
-  void initState() {
-    super.initState();
-    Timer.periodic(Duration(seconds: 3), (Timer timer) {
-      if (_currentPage < 2) {
-        _currentPage++;
-      } else {
-        _currentPage = 0;
-      }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   Timer.periodic(Duration(seconds: 3), (Timer timer) {
+  //     if (_currentPage < 2) {
+  //       _currentPage++;
+  //     } else {
+  //       _currentPage = 0;
+  //     }
 
-      _pageController.animateToPage(
-        _currentPage,
-        duration: Duration(milliseconds: 10),
-        curve: Curves.easeIn,
-      );
-    });
-  }
+  //     _pageController.animateToPage(
+  //       _currentPage,
+  //       duration: Duration(milliseconds: 10),
+  //       curve: Curves.easeIn,
+  //     );
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
+    int i = 0;
     final cart = Provider.of<Cart>(context);
 
     print('//////CART///////');
     print(cart.items.length);
     return Scaffold(
+      backgroundColor: Colors.grey[300],
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text(
@@ -120,17 +122,23 @@ class _CartScreenState extends State<CartScreen> {
             children: [
               Expanded(
                   child: Container(
-                height: MediaQuery.of(context).size.height / 8,
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Row(
-                    children: [
-                      Text('TOTAL ', style: TextStyle(fontSize: 18)),
-                      Text('${cart.totalAmount} \$',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18))
-                    ],
-                  ),
+                // color: Colors.pink,
+                height: MediaQuery.of(context).size.height / 10,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('TOTAL ', style: TextStyle(fontSize: 18)),
+                    Expanded(
+                      child: (cart.items.isEmpty)
+                          ? Text('0 \$',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 18))
+                          : Text(
+                              '${cart.monTotal(cart.totalAmount, cart.fraisLivraison(cart.totalAmount)).ceil()} \$',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 18)),
+                    )
+                  ],
                 ),
               )),
               Expanded(
@@ -154,57 +162,236 @@ class _CartScreenState extends State<CartScreen> {
           ),
         ),
       ),
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        // decoration: BoxDecoration(color: Colors.red),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Container(
-                height: MediaQuery.of(context).size.height / 5,
-                width: MediaQuery.of(context).size.width,
-                // decoration: BoxDecoration(color: Colors.yellow),
-                child: PageView.builder(
-                    controller: _pageController,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: view.length,
-                    itemBuilder: (context, index) {
-                      return view[index];
-                    }),
+      body: (cart.items.isEmpty)
+          ? Center(
+              child: Text(
+              'Panier Vide',
+              style: TextStyle(
+                fontSize: 18,
               ),
-              SizedBox(
-                height: 10,
-              ),
-              Expanded(
-                  // height: MediaQuery.of(context).size.height / 2,
-                  // width: MediaQuery.of(context).size.width,
-                  child: (cart.items.isEmpty)
-                      ? Center(
-                          child: Text(
-                          'Aucun Produit',
-                          style: TextStyle(
-                            fontSize: 18,
-                          ),
-                        ))
-                      : ListView.builder(
-                          itemCount: cart.items?.length ?? 0,
+            ))
+          : Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              // decoration: BoxDecoration(color: Colors.red),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ListView(
+                  children: [
+                    Container(
+                      height: MediaQuery.of(context).size.height / 5,
+                      width: MediaQuery.of(context).size.width,
+                      // decoration: BoxDecoration(color: Colors.yellow),
+                      child: PageView.builder(
+                          // controller: _pageController,
+                          scrollDirection: Axis.horizontal,
+                          itemCount: view.length,
                           itemBuilder: (context, index) {
-                            return CartItemList(
-                              quantity:
-                                  cart.items.values.toList()[index].quantity,
-                              product:
-                                  cart.items.values.toList()[index].product,
-                              id: cart.items.values.toList()[index].id,
-                              price: cart.items.values.toList()[index].price,
-                            );
-                          })),
-              // ...cart.items.values.map((e) => null)
-            ],
-          ),
-        ),
-      ),
+                            return view[index];
+                          }),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    ...cart.items.values.map((e) {
+                      i++;
+                      int a = i - 1;
+                      return CartItemList(
+                        quantity: cart.items.values.toList()[a].quantity,
+                        product: cart.items.values.toList()[a].product,
+                        id: cart.items.values.toList()[a].id,
+                        price: cart.items.values.toList()[a].price,
+                      );
+                    }),
+                    Card(
+                      child: Container(
+                        height: MediaQuery.of(context).size.height / 1.5,
+                        width: MediaQuery.of(context).size.width,
+                        // decoration: BoxDecoration(color: Colors.red),
+                        child: Column(
+                          children: [
+                            Expanded(
+                                flex: 1,
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  // color: Colors.amber,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Center(
+                                      child: Text(
+                                        'Récapitulatif de commande',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20),
+                                      ),
+                                    ),
+                                  ),
+                                )),
+                            SizedBox(
+                              height: 5,
+                              child: Container(color: Colors.grey[300]),
+                            ),
+                            Expanded(
+                                flex: 3,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    // color: Colors.pink,
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              15,
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text('Article(s)'),
+                                              Text(
+                                                  '${cart.totalAmount.ceil()}\$')
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              15,
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text('Frais de livraison'),
+                                              Text(
+                                                  '${cart.fraisLivraison(cart.totalAmount).ceil()} £')
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              15,
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text('Frais de service'),
+                                              Text('200 \$')
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              6,
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          decoration: BoxDecoration(
+                                              color: Colors.grey[300]),
+                                          child: Row(
+                                            children: [
+                                              Expanded(
+                                                  child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceAround,
+                                                children: [
+                                                  Icon(
+                                                    Icons.check,
+                                                    size: 30,
+                                                    color: Colors.green,
+                                                  ),
+                                                  Icon(
+                                                    Icons.check,
+                                                    size: 30,
+                                                    color: Colors.green,
+                                                  ),
+                                                  Text(''),
+                                                  Text('')
+                                                ],
+                                              )),
+                                              Expanded(
+                                                  flex: 3,
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceAround,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                          'Garantie Authenticité'),
+                                                      Text(
+                                                          'Garantie Satisfait ou Remboursé'),
+                                                      Text(
+                                                        'Et bien davantage !',
+                                                        style: TextStyle(
+                                                            color: Color(
+                                                                0xFFee7b77),
+                                                            decoration:
+                                                                TextDecoration
+                                                                    .underline,
+                                                            decorationColor:
+                                                                Color(
+                                                                    0xFFee7b77)),
+                                                      )
+                                                    ],
+                                                  ))
+                                            ],
+                                          ),
+                                        ),
+                                        Expanded(
+                                            child: Container(
+                                          child: Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Expanded(
+                                                  child: Text('TOTAL TTC',
+                                                      style: TextStyle(
+                                                          fontSize: 18))),
+                                              Expanded(
+                                                  flex: 1,
+                                                  child: Center(
+                                                    child: Text(
+                                                      '${cart.monTotal(cart.totalAmount, cart.fraisLivraison(cart.totalAmount)).ceil()} \$',
+                                                      style: TextStyle(
+                                                          color:
+                                                              Color(0xFFee7b77),
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 20),
+                                                    ),
+                                                  )),
+                                            ],
+                                          ),
+                                        ))
+                                      ],
+                                    ),
+                                  ),
+                                ))
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
     );
   }
 }

@@ -1,5 +1,7 @@
 import 'package:apps_ecom/Providers/Models/Product.dart';
+import 'package:apps_ecom/Providers/Models/SousCategorie.dart';
 import 'package:apps_ecom/Providers/Services/Products.dart';
+import 'package:apps_ecom/Providers/Services/SousCategories.dart';
 import 'package:apps_ecom/Screens/Details_Screen.dart';
 import 'package:apps_ecom/Widgets/Article_Item.dart';
 import 'package:flutter/material.dart';

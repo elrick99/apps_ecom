@@ -34,26 +34,36 @@ class Cart with ChangeNotifier {
     return total;
   }
 
+  double fraisLivraison(double mont) {
+    double fraiLivr = (mont * 20) / 100;
+    return fraiLivr;
+  }
+
+  double monTotal(double mont, double fraisLivr) {
+    double monTotal = mont + fraisLivr + 200;
+    return monTotal;
+  }
+
   void addItem(String productId, double price, Product product) {
-    if (_items.containsKey(productId)) {
-      //Change quantity
-      _items.update(
-          productId,
-          (existingCartItem) => CartItem(
-              id: existingCartItem.id,
-              product: existingCartItem.product,
-              price: existingCartItem.price,
-              quantity: existingCartItem.quantity + 1));
-    } else {
-      _items.putIfAbsent(
-          productId,
-          () => CartItem(
-                id: DateTime.now().toString(),
-                product: product,
-                quantity: 1,
-                price: price,
-              ));
-    }
+    // if (_items.containsKey(productId)) {
+    //   //Change quantity
+    //   _items.update(
+    //       productId,
+    //       (existingCartItem) => CartItem(
+    //           id: existingCartItem.id,
+    //           product: existingCartItem.product,
+    //           price: existingCartItem.price,
+    //           quantity: existingCartItem.quantity + 1));
+    // } else {
+    _items.putIfAbsent(
+        productId,
+        () => CartItem(
+              id: DateTime.now().toString(),
+              product: product,
+              quantity: 1,
+              price: price,
+            ));
+    // }
     notifyListeners();
   }
 
