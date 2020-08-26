@@ -1,21 +1,36 @@
+import 'package:apps_ecom/Providers/Models/Cart.dart';
 import 'package:apps_ecom/Providers/Models/Product.dart';
 import 'package:apps_ecom/Providers/Services/Categories.dart';
 import 'package:apps_ecom/Providers/Services/Products.dart';
+import 'package:apps_ecom/Screens/Cart_Screen.dart';
+import 'package:apps_ecom/Widgets/badge.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class DetailsScreen extends StatelessWidget {
+class DetailsScreen extends StatefulWidget {
   final int id;
 
   const DetailsScreen({Key key, this.id}) : super(key: key);
+
+  @override
+  _DetailsScreenState createState() => _DetailsScreenState();
+}
+
+class _DetailsScreenState extends State<DetailsScreen> {
   @override
   Widget build(BuildContext context) {
     var productId = ModalRoute.of(context).settings.arguments as int;
     final loadedProduct =
-        Provider.of<Products>(context, listen: false).findById(this.id);
+        Provider.of<Products>(context, listen: false).findById(this.widget.id);
     final loadedCategrie = Provider.of<Categories>(context, listen: false)
         .findById(loadedProduct.categorie);
+    final cart = Provider.of<Cart>(context, listen: false);
 
+    // print('/////////ITEM CART/////////');
+    // Iterable<bool> vre =
+    //     cart.items.values.map((e) => e.product.id == loadedProduct.id);
+
+    // print(vre.contains(true));
     return ChangeNotifierProvider.value(
       value: loadedProduct,
       child: Scaffold(
@@ -36,7 +51,7 @@ class DetailsScreen extends StatelessWidget {
           ],
         ),
         bottomNavigationBar: Container(
-          height: MediaQuery.of(context).size.height / 8,
+          height: MediaQuery.of(context).size.height / 10,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
@@ -47,20 +62,52 @@ class DetailsScreen extends StatelessWidget {
                         height: MediaQuery.of(context).size.height / 8,
                         child: MaterialButton(
                           child: Center(
-                            child: Text(
-                              'Ajouter au Panier',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 20),
+                            child: Consumer<Cart>(
+                              builder: (BuildContext context, cartData, ch) {
+                                Iterable<bool> vre = cart.items.values.map(
+                                    (e) => e.product.id == loadedProduct.id);
+                                return vre.contains(true)
+                                    ? Text(
+                                        'Acceder au Panier',
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 20),
+                                      )
+                                    : Text(
+                                        'Ajouter au Panier',
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 20),
+                                      );
+                              }
+                              // (cartData.items.isEmpty)
+
+                              ,
                             ),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            cart.addItem(loadedProduct.id.toString(),
+                                loadedProduct.price, loadedProduct);
+                          },
                         ),
                         color: Color(0xFF00b169))),
                 Expanded(
                     child: Container(
                   height: MediaQuery.of(context).size.height / 8,
                   child: MaterialButton(
-                      child: Icon(Icons.card_travel), onPressed: () {}),
+                      child: Consumer<Cart>(
+                        builder: (BuildContext context, cartData, ch) => Badge(
+                          child: ch,
+                          value: cartData.itemCount.toString(),
+                          color: Colors.black,
+                        ),
+                        child: Icon(
+                          Icons.card_travel,
+                          color: Colors.black,
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => CartScreen()));
+                      }),
                 ))
               ],
             ),

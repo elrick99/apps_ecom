@@ -30,7 +30,7 @@ class _FavorisState extends State<Favoris> {
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         // decoration: BoxDecoration(color: Colors.red),
-        child: (dataFavoris.length == 0)
+        child: (dataFavoris.isEmpty)
             ? Center(
                 child: Text(
                 'Aucun Favoris',

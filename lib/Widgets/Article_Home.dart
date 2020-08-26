@@ -7,14 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ArticleScreen extends StatelessWidget {
-  final Function dataprod;
+  // final Function dataprod;
 
-  const ArticleScreen({Key key, this.dataprod}) : super(key: key);
+  // const ArticleScreen({Key key, this.dataprod}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    print('/////////RELOAD/////////');
+    // print('/////////RELOAD/////////');
     // dataprod.call();
-    print(dataprod);
+    // print(dataprod);
     final providerProducts = Provider.of<Products>(context);
     final dataProduct = providerProducts.items;
     // final date = dataprod.call();
@@ -62,13 +62,12 @@ class ArticleScreen extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              Footer(),
+              // Footer(),
               // Container(
               //   height: 100,
               //   width: 200,
               //   color: Colors.red,
               // )
-              
             ],
           ),
         ),

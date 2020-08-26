@@ -1,3 +1,4 @@
+import 'package:apps_ecom/Providers/Models/User.dart';
 import 'package:flutter/foundation.dart';
 
 enum Etat { Neuf, QuasiNeuf, Amoche }
@@ -18,6 +19,8 @@ class Product with ChangeNotifier {
   final String marque;
   final int categorie;
   final int sousCategorie;
+  List<User> userFavoris;
+  final User admin;
 
   Product(
       {@required this.id,
@@ -34,7 +37,9 @@ class Product with ChangeNotifier {
       this.taille,
       @required this.marque,
       @required this.categorie,
-      @required this.sousCategorie});
+      @required this.sousCategorie,
+      this.userFavoris,
+      this.admin});
 
   void toggleFavoriteStatus() {
     isFavorite = !isFavorite;

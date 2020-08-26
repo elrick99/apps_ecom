@@ -1,3 +1,4 @@
+import 'package:apps_ecom/Providers/Models/Cart.dart';
 import 'package:apps_ecom/Providers/Models/Product.dart';
 import 'package:apps_ecom/Providers/Services/Categories.dart';
 import 'package:apps_ecom/Providers/Services/Products.dart';
@@ -37,6 +38,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(
           value: SousCategories(),
         ),
+        ChangeNotifierProvider.value(
+          value: Cart(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -57,12 +61,11 @@ class MyApp extends StatelessWidget {
         routes: {
           '/detail': (context) => DetailsScreen(),
           '/profil': (context) => ProfilScreen(),
-          '/Discussions_Screen':(context)=>DiscussionScreen(),
-          '/Notifications_Screen':(context)=>NotificationsScreen(),
-          '/Commandes_Screen':(context)=>CommandesScreen(),
-          '/Mes_Retours_Screen':(context)=>MesRetourScreen(),
-          '/Reglages_Screen':(context)=>ReglageScreen(),
-
+          '/Discussions_Screen': (context) => DiscussionScreen(),
+          '/Notifications_Screen': (context) => NotificationsScreen(),
+          '/Commandes_Screen': (context) => CommandesScreen(),
+          '/Mes_Retours_Screen': (context) => MesRetourScreen(),
+          '/Reglages_Screen': (context) => ReglageScreen(),
         },
       ),
     );
