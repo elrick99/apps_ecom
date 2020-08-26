@@ -1,14 +1,55 @@
 import 'package:apps_ecom/Screens/Commandes_Screen.dart';
 import 'package:apps_ecom/Screens/Discussions_Screen.dart';
 import 'package:apps_ecom/Screens/Favoris.dart';
+import 'package:apps_ecom/Screens/Home_Screen.dart';
 import 'package:apps_ecom/Screens/Notifications_Screen.dart';
+import 'package:apps_ecom/Screens/baseAuth.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import 'Boutique_Screen.dart';
 
-class ProfilScreen extends StatelessWidget {
+class ProfilScreen extends StatefulWidget {
+   ProfilScreen({Key key, this.auth, this.userId, this.logoutCallback,this.user})
+      : super(key: key);
+       
+  FirebaseUser user;
+  final BaseAuth auth;
+  final VoidCallback logoutCallback;
+  final String userId;
+  @override
+  _ProfilScreenState createState() => _ProfilScreenState();
+}
+
+class _ProfilScreenState extends State<ProfilScreen> {
+  //  void _addData() {
+  //   try {
+  //     Firestore.instance.runTransaction((Transaction transaction) async {
+  //       CollectionReference reference =
+  //           Firestore.instance.collection('Présence');
+  //       await reference.add({
+  //         "email": widget.user.email,
+  //         "name": widget.user.displayName
+  //       });
+  //     });
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  //   widget.user.sendEmailVerification();
+  // }
+    signOut() async {
+    try {
+      await widget.auth.signOut();
+      widget.logoutCallback();
+    } catch (e) {
+      print(e);
+    }
+  }
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       backgroundColor: Colors.grey[250],
       appBar: AppBar(
@@ -47,7 +88,8 @@ class ProfilScreen extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      child: Text('Elrick',
+
+                      child: (widget.user == null)?Text(widget.userId):Text(widget.user.email,
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 20)),
                     )
@@ -362,27 +404,38 @@ class ProfilScreen extends StatelessWidget {
             SizedBox(
               height: 40,
             ),
-            Container(
-              height: MediaQuery.of(context).size.height / 10,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(color: Colors.white),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Icon(
-                      Icons.help_outline,
-                      color: Colors.black,
-                    ),
-                    Text(
-                      'FAQ',
-                      style: TextStyle(
+            InkWell(
+              onTap: (){
+                FirebaseAuth.instance.signOut();
+                      GoogleSignIn().signOut();
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) => HomeScreen()));
+                  // signOut();
+              },
+              child: Container(
+                height: MediaQuery.of(context).size.height / 10,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(color: Colors.white),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Icon(
+                        Icons.help_outline,
                         color: Colors.black,
                       ),
-                    ),
-                    Icon(Icons.arrow_forward_ios, color: Colors.grey)
-                  ],
+                      Text(
+                        'Deconnection',
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
+                      ),
+                      Icon(Icons.settings_power, color: Colors.grey)
+                    ],
+                  ),
                 ),
               ),
             ),
