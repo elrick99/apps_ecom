@@ -3,6 +3,7 @@ import 'package:apps_ecom/Providers/Models/Product.dart';
 import 'package:apps_ecom/Providers/Services/Categories.dart';
 import 'package:apps_ecom/Providers/Services/Products.dart';
 import 'package:apps_ecom/Providers/Services/SousCategories.dart';
+import 'package:apps_ecom/Screens/BackEnd/Home_Admin.dart';
 import 'package:apps_ecom/Screens/Commandes_Screen.dart';
 import 'package:apps_ecom/Screens/Details_Screen.dart';
 import 'package:apps_ecom/Screens/Discussions_Screen.dart';
@@ -12,6 +13,7 @@ import 'package:apps_ecom/Screens/Notifications_Screen.dart';
 import 'package:apps_ecom/Screens/Profil_Screen.dart';
 import 'package:apps_ecom/Screens/Search_Screen.dart';
 import 'package:apps_ecom/Widgets/Article_Home.dart';
+import 'package:apps_ecom/Widgets/BackEnd/BottomBar.dart';
 import 'package:apps_ecom/Widgets/BottomBar.dart';
 import 'package:apps_ecom/Widgets/Footer.dart';
 import 'package:flutter/material.dart';
@@ -56,7 +58,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: BottomBar(),
+        home: BottomBarAdmin(),
         // home: SearchBar(),
         routes: {
           '/detail': (context) => DetailsScreen(),

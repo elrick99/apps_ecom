@@ -101,6 +101,8 @@ class _HeaderHomeState extends State<HeaderHome> {
                 image: AssetImage("assets/images/style.jpg"),
                 fit: BoxFit.cover,
               ),
+              // background: Image.network(
+              //     'https://images.fr.shopping.rakuten.com/photo/basket-nike-air-max-97-921826-013-1230178019_ML.jpg'),
             ),
           ),
         ];
