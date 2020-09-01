@@ -48,7 +48,11 @@ class _HeaderHomeState extends State<HeaderHome> {
                 ),
                 onPressed: () {
                   Navigator.push(context,
+<<<<<<< Updated upstream
                       MaterialPageRoute(builder: (_) => LoginSignupPage()));
+=======
+                      MaterialPageRoute(builder: (_) =>RootPage(auth:  Auth())));
+>>>>>>> Stashed changes
                 }),
             title: Center(
               child: Text(

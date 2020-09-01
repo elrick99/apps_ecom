@@ -241,15 +241,26 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
                 borderRadius: new BorderRadius.circular(30.0)),
             color: Colors.black,
             child: new Text(
+<<<<<<< Updated upstream
                 _isLoginForm ? 'Creer un compte' : ' Connectez vous ',
                 style: new TextStyle(
                     fontSize: 18.0,
                     fontWeight: FontWeight.w300,
                     color: Colors.grey)),
+=======
+                 'Creer un compte',
+                style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.w300, color: Colors.grey)),
+>>>>>>> Stashed changes
             onPressed: toggleFormMode),
       ),
     );
   }
+<<<<<<< Updated upstream
+=======
+  
+
+ 
+>>>>>>> Stashed changes
 
   Widget showPrimaryButton() {
     return new Padding(
@@ -261,12 +272,13 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
             shape: new RoundedRectangleBorder(
                 borderRadius: new BorderRadius.circular(30.0)),
             color: Colors.black,
-            child: new Text(_isLoginForm ? 'Connexion' : 'Creer un compte',
+            child: new Text('Connexion',
                 style: new TextStyle(fontSize: 20.0, color: Colors.white)),
             onPressed: validateAndSubmit,
           ),
         ));
   }
+  
 
   Widget showThistButton() {
     return Padding(
