@@ -1,57 +1,56 @@
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
 
 
-class PasswordField extends StatefulWidget {
+// class PasswordField extends StatefulWidget {
 
-  const PasswordField ({
-    this.fieldKey,
-    this.hintText,
-    this.labelText,
-    this.helperText,
-    this.onSaved,
-    this.validator,
-    this.onFieldSubmitted
+//   const PasswordField ({
+//     this.fieldKey,
+//     this.hintText,
+//     this.labelText,
+//     this.helperText,
+//     this.onSaved,
+//     this.validator,
+//     this.onFieldSubmitted
 
-  });
+//   });
 
-  final Key fieldKey;
- final String hintText;
- final String labelText;
- final String helperText;
- final FormFieldSetter<String>onSaved;
- final FormFieldValidator<String>validator;
- final ValueChanged<String>onFieldSubmitted;
-  @override
-  _PasswordFieldState createState() => _PasswordFieldState();
-}
+//   final Key fieldKey;
+//  final String hintText;
+//  final String labelText;
+//  final String helperText;
+//  final FormFieldSetter<String>onSaved;
+//  final FormFieldValidator<String>validator;
+//  final ValueChanged<String>onFieldSubmitted;
+//   @override
+//   _PasswordFieldState createState() => _PasswordFieldState();
+// }
 
-class _PasswordFieldState extends State<PasswordField> {
-  bool _obscureText=true;
-  @override
+// class _PasswordFieldState extends State<PasswordField> {
+//   bool _obscureText=true;
+//   @override
 
-  Widget build(BuildContext context) {
-    return TextFormField(
+//   Widget build(BuildContext context) {
+//     return TextFormField(
 
-      key: widget.fieldKey,
-      obscureText: _obscureText,
-      maxLength: 8,
-      onSaved:widget.onSaved ,
-      validator: widget.validator,
-      onFieldSubmitted: widget.onFieldSubmitted,
-      decoration: InputDecoration(
-        border: UnderlineInputBorder(),
-        filled: true,
-        suffixIcon: GestureDetector(
-          onTap: (){
-            setState(() {
+//       key: widget.fieldKey,
+//       obscureText: _obscureText,
+//       onSaved:widget.onSaved ,
+//       validator: widget.validator,
+//       onFieldSubmitted: widget.onFieldSubmitted,
+//       decoration: InputDecoration(
+//         border: UnderlineInputBorder(),
+//         filled: true,
+//         suffixIcon: GestureDetector(
+//           onTap: (){
+//             setState(() {
               
-              _obscureText=!_obscureText;
-            });
-          },
-          child: Icon(_obscureText?Icons.visibility: Icons.visibility_off),
-        )
-      ),
+//               _obscureText=!_obscureText;
+//             });
+//           },
+//           child: Icon(_obscureText?Icons.visibility: Icons.visibility_off),
+//         )
+//       ),
       
-    );
-  }
-}
+//     );
+//   }
+// }

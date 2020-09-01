@@ -244,15 +244,18 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
                 borderRadius: new BorderRadius.circular(30.0)),
             color: Colors.black,
             child: new Text(
-                _isLoginForm ? 'Creer un compte' : ' Connectez vous ',
-                style: new TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w300,
-                    color: Colors.grey)),
-            onPressed: toggleFormMode),
+                 'Creer un compte',
+                style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.w300, color: Colors.grey)),
+            onPressed: (){
+                Navigator.push(context, MaterialPageRoute(builder: (_)=>CreerMonCompte()));
+
+            }),
       ),
     );
   }
+  
+
+ 
 
   Widget showPrimaryButton() {
     return new Padding(

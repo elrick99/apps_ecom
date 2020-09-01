@@ -1,5 +1,8 @@
+import 'package:apps_ecom/Providers/Models/User.dart';
+import 'package:apps_ecom/Providers/Services/Users.dart';
 import 'package:apps_ecom/Widgets/Password.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 enum TypeOptions { Particulier, Createur, Bloggeur, VenderPro }
 
@@ -10,41 +13,24 @@ class CreerMonCompte extends StatefulWidget {
 }
 
 class _CreerMonCompteState extends State<CreerMonCompte> {
+User user;
+  bool _obscureText=true;
   bool genreF = true;
   bool genreM = false;
-  // static const menuItems = <String>[
-  //   'PARTICULIER',
-  //   'BLOGGEUR',
-  //   'CREATEUR',
-  //   'VENDREUR PROFESSIONNEL'
-  // ];
+  bool _checkBoxval=false;
+  bool _checkBoxval1=false;
+  String genre="";
+  String prenom="";
+  String email="";
+  String password="";
 
-  // static const paysItems = <String>[
-  //   'COTE D\'IVOIRE',
-  //   'MALI',
-  //   'BURKINA FASO',
-  //   'GHANA',
-  //   'TOGO',
-  //   'NIGERIA',
-  //   'NIGER',
-  //   'GUINEE'
-  // ];
-  // final List<DropdownMenuItem<String>> _dropDownpaysItems = paysItems
-  //     .map((String value) => DropdownMenuItem<String>(
-  //           value: value,
-  //           child: Text(value),
-  //         ))
-  //     .toList();
-  // final List<DropdownMenuItem<String>> _dropDownMenuItems = menuItems
-  //     .map((String values) => DropdownMenuItem<String>(
-  //           value: values,
-  //           child: Text(values),
-  //         ))
-  //     .toList();
-  // String _btnSelectedVal = 'PARTICULIER';
-  // String _btnSelectedVal1 = 'COTE D\'IVOIRE';
+  
   @override
   Widget build(BuildContext context) {
+  final provider=  Provider.of<UsersService>(context);
+       print("gooooooooooooooooooooooooo");
+       print(provider.items.length);
+  
     return Scaffold(
         backgroundColor: Colors.grey[300],
         appBar: AppBar(
@@ -92,7 +78,9 @@ class _CreerMonCompteState extends State<CreerMonCompte> {
                                   children: [
                                     Expanded(
                                       child: InkWell(
+                                        
                                         onTap: () {
+                                          genre = "Femme";
                                           setState(() {
                                             genreF = true;
                                             genreM = false;
@@ -126,6 +114,7 @@ class _CreerMonCompteState extends State<CreerMonCompte> {
                                     Expanded(
                                       child: InkWell(
                                         onTap: () {
+                                          genre = "Homme";
                                           setState(() {
                                             genreM = true;
                                             genreF = false;
@@ -179,6 +168,11 @@ class _CreerMonCompteState extends State<CreerMonCompte> {
                               decoration: BoxDecoration(
                                   border: Border.all(color: Colors.black)),
                               child: TextFormField(
+                                onChanged: (String val){
+                                  setState(() {
+                                    prenom = val;
+                                  });
+                                },
                                 decoration: InputDecoration(
                                   focusedBorder: InputBorder.none,
                                   border: UnderlineInputBorder(),
@@ -206,6 +200,11 @@ class _CreerMonCompteState extends State<CreerMonCompte> {
                               decoration: BoxDecoration(
                                   border: Border.all(color: Colors.black)),
                               child: TextFormField(
+                                onChanged: (String val){
+                                  setState(() {
+                                    email = val;
+                                  });
+                                },
                                 decoration: InputDecoration(
                                   focusedBorder: InputBorder.none,
                                   border: UnderlineInputBorder(),
@@ -232,16 +231,28 @@ class _CreerMonCompteState extends State<CreerMonCompte> {
                               width: MediaQuery.of(context).size.width,
                               decoration: BoxDecoration(
                                   border: Border.all(color: Colors.black)),
-                              child: PasswordField(
-                               // fieldKey: _passwordFieldKey,
-                               // helperText: "Au moins 8 caractere",
-                               // labelText: "Mot de passe",
-                                // onFieldSubmitted: (String value){
-                                //   setState(() {
-                                //    // this._password=value;
-                                //   });
-                                // },
-                                
+                              child: TextFormField(
+                                       obscureText: _obscureText,
+                                onChanged: (String val){
+                                  setState(() {
+                                    password = val;
+                                  });
+                                },
+                                decoration: InputDecoration(
+                                   suffixIcon: GestureDetector(
+          onTap: (){
+            setState(() {
+              
+              _obscureText=!_obscureText;
+            });
+          },
+          child: Icon(_obscureText?Icons.visibility: Icons.visibility_off),
+        ),
+        filled: true,
+                                  focusedBorder: InputBorder.none,
+                                  border: UnderlineInputBorder(),
+                                ),
+                                maxLines: 1,
                               ),
                             ),
                           ],
@@ -267,7 +278,7 @@ class _CreerMonCompteState extends State<CreerMonCompte> {
                       left: 20.0, right: 20.0, bottom: 10),
                   child: Column(
                     children: [
-                      Padding(
+                          Padding(
                         padding: const EdgeInsets.only(top: 10),
                         child: Container(
                           width: MediaQuery.of(context).size.width,
@@ -275,7 +286,75 @@ class _CreerMonCompteState extends State<CreerMonCompte> {
                           child: Column(
                             children: [
                               Text(
-                                  'Votre Numero de Téléphone ne sera pas aficché publiquement\n Il sera communiqué à un tiers uniquement en cas de remise en main propre de l\'article')
+                                  'Niveau de securite:',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold
+                                  ),
+                                  )
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 10,),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          // decoration: BoxDecoration(color: Colors.red),
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                    Checkbox(
+                                    onChanged: (bool value){
+                                      setState(() {
+                                        this._checkBoxval=value;
+                                      }, 
+                                      );
+                                    },
+                                    value:this._checkBoxval
+                                    ),
+                                  Container(
+                                     height: 30,
+                                    width: 200,
+                                    child: Text(
+                                        'Je souhaite recevoir les offres de NanShope',
+                                        style: TextStyle(
+                                          color: Colors.grey
+                                        ),
+                                        ),
+                                  ),
+
+                                ],
+                              ),
+                              SizedBox(height: 10,),
+
+                                   Row(
+                                children: [
+                                    Checkbox(
+                                    onChanged: (bool value){
+                                      setState(() {
+                                        this._checkBoxval1=value;
+                                      }, 
+                                      );
+                                    },
+                                    value:this._checkBoxval1
+                                    ),
+                                  Container(
+                                    height: 30,
+                                    width: 200,
+                                    child: Text(
+                                        'Je souhaite recevoir les offres de patenaire de NanShope',
+                                        style: TextStyle(
+                                          color: Colors.grey
+                                        ),
+                                        ),
+                                  ),
+
+                                ],
+                              ),
+
+                                
                             ],
                           ),
                         ),
@@ -283,77 +362,101 @@ class _CreerMonCompteState extends State<CreerMonCompte> {
                       Container(
                         height: MediaQuery.of(context).size.height / 6,
                         width: MediaQuery.of(context).size.width,
+                        
                         // decoration: BoxDecoration(color: Colors.red),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Text(
-                              'Téléphone',
-                              style: TextStyle(fontSize: 18),
-                            ),
-                            Container(
-                              height: MediaQuery.of(context).size.height / 12,
-                              width: MediaQuery.of(context).size.width,
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.black)),
-                              child: TextFormField(
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                  focusedBorder: InputBorder.none,
-                                  border: UnderlineInputBorder(),
-                                ),
-                                maxLines: 1,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: 20.0, right: 20.0, bottom: 10),
-                  child: Column(
-                    children: [
-                      Container(
-                        height: MediaQuery.of(context).size.height / 7,
-                        width: MediaQuery.of(context).size.width,
-                        child: Text(
-                            'Le vendeur, s\'il se presente comme un consommateur ou un non-professionnel, alors qu\'il agit à titre professionnel, en court des sanctions'),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-                        child: Container(
-                          height: MediaQuery.of(context).size.height / 12,
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                            color: Colors.black,
-                          ),
-                          child: MaterialButton(
-                            onPressed: () {},
-                            splashColor: Colors.white24,
-                            child: Center(
-                              child: Text(
-                                'Valider',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              )
-            ],
-          ),
-        ));
-  }
-}
+                            
+                            InkWell(
+                              onTap: (){
+                                setState(() {
+                                  provider.addUser(password, prenom, genre, email);
+                                  // user.prenom = "<<Bonjour";
+                                  print(password);
+                                  print(prenom);
+                                  print(genre);
+                                  print(email);
+                                  // provider.addUser(user);
+                                                                  });
+                                                                },
+                                                                child: Container(
+                                                                  height: MediaQuery.of(context).size.height / 12,
+                                                                  width: MediaQuery.of(context).size.width,
+                                                                  decoration: BoxDecoration(
+                                                                    color: Colors.black,
+                                                                      ),
+                                                                      child: Center(
+                                                                        child: Text(
+                                                                  'CREER UN COMPTE',
+                                                                  style: TextStyle(fontSize: 18,
+                                                                  color: Colors.white
+                                                                  ),
+                                                                ),
+                                                                      ),
+                                                                ),
+                                                              ),
+                                                              
+                                                            
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Container(
+                                                  width: MediaQuery.of(context).size.width,
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.only(
+                                                        left: 20.0, right: 20.0, bottom: 10),
+                                                    child: Column(
+                                                      children: [
+                                                        Container(
+                                                          height: MediaQuery.of(context).size.height / 7,
+                                                          width: MediaQuery.of(context).size.width,
+                                                          child: Text(
+                                                              'Le vendeur, s\'il se presente comme un consommateur ou un non-professionnel, alors qu\'il agit à titre professionnel, en court des sanctions',
+                                                               style: TextStyle(
+                                                                fontSize: 16
+                                                              ),
+                                                              ),
+                                                        ),
+                                  
+                                              ],
+                                            ),
+                                                  )
+                                                ),
+                                                Container(
+                                                  width: MediaQuery.of(context).size.width,
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.only(
+                                                        left: 20.0, right: 20.0, bottom: 10),
+                                                    child: Column(
+                                                      children: [
+                                                        Container(
+                                                          height: MediaQuery.of(context).size.height / 7,
+                                                          width: MediaQuery.of(context).size.width,
+                                                          child: Text(
+                                                              'Le vendeur, s\'il se presente comme un consommateur ou un non-professionnel, alors qu\'il agit à titre professionnel, en court des sanctions',
+                                                              style: TextStyle(
+                                                                color: Colors.grey,
+                                                                
+                                                              ),
+                                                              ),
+                                                        ),
+                                              ]
+                                            )    
+                                          )
+                                                )
+                                              ]
+                                            )
+                                          )
+                                          );
+                                    }
+                                  }
+                                  
+                                  

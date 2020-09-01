@@ -3,6 +3,7 @@ import 'package:apps_ecom/Providers/Models/Product.dart';
 import 'package:apps_ecom/Providers/Services/Categories.dart';
 import 'package:apps_ecom/Providers/Services/Products.dart';
 import 'package:apps_ecom/Providers/Services/SousCategories.dart';
+import 'package:apps_ecom/Providers/Services/Users.dart';
 import 'package:apps_ecom/Screens/BackEnd/Home_Admin.dart';
 import 'package:apps_ecom/Screens/Boutique_Screen.dart';
 import 'package:apps_ecom/Screens/Commandes_Screen.dart';
@@ -45,6 +46,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(
           value: Cart(),
         ),
+        ChangeNotifierProvider.value(value: UsersService())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
