@@ -4,6 +4,7 @@ import 'package:apps_ecom/Providers/Services/Categories.dart';
 import 'package:apps_ecom/Providers/Services/Products.dart';
 import 'package:apps_ecom/Providers/Services/SousCategories.dart';
 import 'package:apps_ecom/Screens/BackEnd/Home_Admin.dart';
+import 'package:apps_ecom/Screens/Boutique_Screen.dart';
 import 'package:apps_ecom/Screens/Commandes_Screen.dart';
 import 'package:apps_ecom/Screens/Details_Screen.dart';
 import 'package:apps_ecom/Screens/Discussions_Screen.dart';
@@ -58,17 +59,17 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: BottomBarAdmin(),
-        // home: SearchBar(),
-        routes: {
-          '/detail': (context) => DetailsScreen(),
-          '/profil': (context) => ProfilScreen(),
-          '/Discussions_Screen': (context) => DiscussionScreen(),
-          '/Notifications_Screen': (context) => NotificationsScreen(),
-          '/Commandes_Screen': (context) => CommandesScreen(),
-          '/Mes_Retours_Screen': (context) => MesRetourScreen(),
-          '/Reglages_Screen': (context) => ReglageScreen(),
-        },
+        home: BottomBar(),
+        // home: BoutiqueScreen(),
+        // routes: {
+        //   '/detail': (context) => DetailsScreen(),
+        //   '/profil': (context) => ProfilScreen(),
+        //   '/Discussions_Screen': (context) => DiscussionScreen(),
+        //   '/Notifications_Screen': (context) => NotificationsScreen(),
+        //   '/Commandes_Screen': (context) => CommandesScreen(),
+        //   '/Mes_Retours_Screen': (context) => MesRetourScreen(),
+        //   '/Reglages_Screen': (context) => ReglageScreen(),
+        // },
       ),
     );
   }

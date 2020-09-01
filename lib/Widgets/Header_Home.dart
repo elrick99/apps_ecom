@@ -1,5 +1,6 @@
 import 'package:apps_ecom/Providers/Models/Product.dart';
 import 'package:apps_ecom/Providers/Services/Products.dart';
+import 'package:apps_ecom/Screens/LoginSignupPage.dart';
 import 'package:apps_ecom/Screens/Notifications_Screen.dart';
 import 'package:apps_ecom/Screens/Profil_Screen.dart';
 import 'package:apps_ecom/Screens/Search_Screen.dart';
@@ -47,7 +48,7 @@ class _HeaderHomeState extends State<HeaderHome> {
                 ),
                 onPressed: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => ProfilScreen()));
+                      MaterialPageRoute(builder: (_) => LoginSignupPage()));
                 }),
             title: Center(
               child: Text(

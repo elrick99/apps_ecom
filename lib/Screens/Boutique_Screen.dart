@@ -1,285 +1,519 @@
 import 'package:flutter/material.dart';
 
-
+enum TypeOptions { Particulier, Createur, Bloggeur, VenderPro }
 
 class BoutiqueScreen extends StatefulWidget {
-  const BoutiqueScreen({Key key}): super(key: key);
+  const BoutiqueScreen({Key key}) : super(key: key);
   @override
   _BoutiqueScreenState createState() => _BoutiqueScreenState();
 }
 
 class _BoutiqueScreenState extends State<BoutiqueScreen> {
-  static const statut=<String>[
-  "Particulier"
-  "Createur"
-  "Bloggeur"
-  "Vender professionnel"
+  bool genreF = true;
+  bool genreM = false;
+  static const menuItems = <String>[
+    'PARTICULIER',
+    'BLOGGEUR',
+    'CREATEUR',
+    'VENDREUR PROFESSIONNEL'
   ];
-  // final List<DropdownMenuItem<String>>_dropDownMenuItems=statut.map(
-  //   (String value)=>DropdownMenuItem<String>(
-  //   value: value,
-  //   child: Text(value),
-  //   ),
-  // ).toList();
-//   final List<PopupMenuItem<String>>_popUpMenuItems=statut.map((String value) => PopupMenuItem<String>(
-// value: value,
-// child: Text(value),
-//   )).toList();
-  String _btn1SelectedVal="Particulier";
- 
+
+  static const paysItems = <String>[
+    'COTE D\'IVOIRE',
+    'MALI',
+    'BURKINA FASO',
+    'GHANA',
+    'TOGO',
+    'NIGERIA',
+    'NIGER',
+    'GUINEE'
+  ];
+  final List<DropdownMenuItem<String>> _dropDownpaysItems = paysItems
+      .map((String value) => DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          ))
+      .toList();
+  final List<DropdownMenuItem<String>> _dropDownMenuItems = menuItems
+      .map((String values) => DropdownMenuItem<String>(
+            value: values,
+            child: Text(values),
+          ))
+      .toList();
+  String _btnSelectedVal = 'PARTICULIER';
+  String _btnSelectedVal1 = 'COTE D\'IVOIRE';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-  appBar: AppBar(
-    title: Text("CREER MA BOUTIQUE",
-    style: TextStyle(
-      color: Colors.black
-    ),
-    ),
-  ),
-
-  body: SingleChildScrollView(
-    child: Container(
-      child: Column(
-    children: [
-   Stack(
-     overflow: Overflow.visible,
-     children: [
-          Container(
-         height: 200,
-         width: double.infinity,
-         color: Colors.orange.shade100,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.phone_iphone, color: Colors.black,size: 40,),
-             Container(
-              height: 50,
-              width: 250,
-              child: Text("Avant de mettre en vente vos articles, creez votre boutique en quelque seconds!"),
-            ),                
-       
-          ],
-        ),
-      ),
-       Positioned( 
-         left: 150,
-         bottom: -30,
-            child:Container(
-              height: 70,
-              width: 70,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(100),
-                color: Colors.green
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Icon(Icons.add),
-                  Text("Ajouter"),
-                   Text("Uun photo")
-                ],
-              ),
-            )
+        backgroundColor: Colors.grey[300],
+        appBar: AppBar(
+          iconTheme: IconThemeData(color: Colors.black),
+          backgroundColor: Colors.white,
+          title: Text(
+            "CREER MA BOUTIQUE",
+            style: TextStyle(color: Colors.black),
           ),
-     ],
-   ),
-
-   Padding(
-     padding: const EdgeInsets.all(30),
-     child: Column(
-       children: [
-       Card(
-         elevation: 7,
-         child: Container(
-            height: 40,
-          width: MediaQuery.of(context).size.width/1,
-           child: Row(
-             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-             children: [
-               Container(
-                 child: Text("particulier"),
-               ),
-               DropdownButton<String>(
-                 items: [],
-                 value: _btn1SelectedVal,
-                 onChanged: (String newValue){
-                   setState(() {  
-                     _btn1SelectedVal= newValue;
-                   });
-                 },
-                // items:this._dropDownMenuItems,
-               ),
-             ],
-           ),
-         ),
-       ),
-    SizedBox(height: 10,),
-       Card(
-         elevation: 7,
-         child: TextFormField(
-         textCapitalization: TextCapitalization.words,
-         decoration: InputDecoration(
-         border: OutlineInputBorder(),
-         filled: true,
-         hintText: 'Description de vos activites',
-         labelText: 'Description(facultatif)'
-         ),
-         maxLength: 250,
-         ),
-       ),
-        SizedBox(height: 10,),
-       Column(
-         mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-             Container(child: Text("Addre de votre boutique",
-             style: TextStyle(
-               fontWeight: FontWeight.bold
-             ),
-             )),
-               Container(child: Text("Elle sera utiser en cas de remise en main propre ou de retour du colis"))
-          ],
-       ),
-       SizedBox(height: 10,),
-       Container(
-         width: 300,
-         height: 50,
-         child: Row(
-           children: [
-             Container(
-                width: 150,
-                height: 50,
-                color: Colors.grey,
-               child: Center(child: Text("Mme")),
-             ),
-               Container(
-                 color: Colors.grey.shade300,
-                  width: 150,
-               child: Center(child: Text("M.")),
-             )
-
-           ],
-         ),
-       ),
-           SizedBox(height: 24,),
-           Card(
-             elevation: 7,
-             child: TextFormField(
-              textCapitalization: TextCapitalization.words,
-              decoration: InputDecoration(
-                border: UnderlineInputBorder(),
-                filled: true,
-                hintText: 'votre nom',
-                labelText: 'nom'
-              ),
-             ),
-           ),
-            SizedBox(height: 24,),
-           Card(
-             elevation: 7,
-             child: TextFormField(
-              textCapitalization: TextCapitalization.words,
-              decoration: InputDecoration(
-                border: UnderlineInputBorder(),
-                filled: true,
-                hintText: 'votre prenom',
-                labelText: 'prenom'
-              ),
-             ),
-           ),
-            SizedBox(height: 24,),
-             Card(
-               elevation: 7,
-               child: TextFormField(
-            textCapitalization: TextCapitalization.words,
-            decoration: InputDecoration(
-                border: UnderlineInputBorder(),
-                filled: true,
-                hintText: 'Code postal',
-                labelText: 'Code postal'
-            ),
-            keyboardType: TextInputType.phone,
-           ),
-             ) ,
-           
-              SizedBox(height: 24,),
-           Card(
-           elevation: 7,
-             child: TextFormField(
-              textCapitalization: TextCapitalization.words,
-              decoration: InputDecoration(
-                border: UnderlineInputBorder(),
-                filled: true,
-                hintText: 'votre ville',
-                labelText: 'ville'
-              ),
-             ),
-           ),
-           SizedBox(height: 24,),
-              Card(
-                elevation: 7,
-                child: TextFormField(
-            textCapitalization: TextCapitalization.words,
-            decoration: InputDecoration(
-                border: UnderlineInputBorder(),
-                filled: true,
-                hintText: 'votre pays',
-                labelText: 'pays'
-            ),
-           ),
-              ),
-           SizedBox(height: 24,),
-             Card(
-               elevation: 7,
-               child: TextFormField(
-            textCapitalization: TextCapitalization.words,
-            decoration: InputDecoration(
-                border: UnderlineInputBorder(),
-                filled: true,
-                hintText: 'Numero de telephone',
-                labelText: 'Numero de telephone'
-            ),
-            keyboardType: TextInputType.phone,
-           ),
-             ),
-             SizedBox(height: 20,),
-             Row(
-               crossAxisAlignment: CrossAxisAlignment.start,
-               children: [
-                  Container(
-                     child: IconButton(icon: Icon(Icons.security), onPressed: (){}),
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                height: MediaQuery.of(context).size.height / 2.2,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(color: Colors.white),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10.0, top: 10),
+                        child: Container(
+                          height: MediaQuery.of(context).size.height / 6,
+                          width: MediaQuery.of(context).size.width,
+                          // decoration: BoxDecoration(color: Colors.red),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text(
+                                'Type',
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              Container(
+                                height: MediaQuery.of(context).size.height / 12,
+                                width: MediaQuery.of(context).size.width,
+                                decoration: BoxDecoration(),
+                                child: DropdownButton<String>(
+                                    isExpanded: true,
+                                    value: _btnSelectedVal,
+                                    onChanged: (String newValue) {
+                                      setState(() {
+                                        _btnSelectedVal = newValue;
+                                      });
+                                    },
+                                    items: this._dropDownMenuItems),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Container(
+                        height: MediaQuery.of(context).size.height / 4,
+                        width: MediaQuery.of(context).size.width,
+                        // decoration: BoxDecoration(color: Colors.red),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              'Description',
+                              style: TextStyle(fontSize: 18),
+                            ),
+                            Container(
+                              height: MediaQuery.of(context).size.height / 6,
+                              width: MediaQuery.of(context).size.width,
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.black)),
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                  focusedBorder: InputBorder.none,
+                                  border: UnderlineInputBorder(),
+                                ),
+                                maxLines: 5,
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
                   ),
-                  Container(
-                    height: 70,
-                    width: 200,
-                    
-                    child: Text("voila voila voila vvoila voila voila voila voila voila voila voila voila voila voila voila voila v voila vv"),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                height: MediaQuery.of(context).size.height / 1.8,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(color: Colors.white),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Container(
+                          height: MediaQuery.of(context).size.height / 6,
+                          width: MediaQuery.of(context).size.width,
+                          // decoration: BoxDecoration(color: Colors.red),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text(
+                                'Genre',
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: MediaQuery.of(context).size.height / 10,
+                                // decoration: BoxDecoration(color: Colors.red),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Expanded(
+                                      child: InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            genreF = true;
+                                            genreM = false;
+                                          });
+                                        },
+                                        child: Container(
+                                          height: MediaQuery.of(context)
+                                              .size
+                                              .height,
+                                          decoration: BoxDecoration(
+                                              color: (genreF == false)
+                                                  ? Colors.white
+                                                  : Colors.black,
+                                              border: Border.all(
+                                                  color: (genreF == false)
+                                                      ? Colors.black
+                                                      : Colors.white)),
+                                          child: Center(
+                                            child: Text('FEMME',
+                                                style: TextStyle(
+                                                    color: (genreF == false)
+                                                        ? Colors.black
+                                                        : Colors.white)),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Expanded(
+                                      child: InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            genreM = true;
+                                            genreF = false;
+                                          });
+                                        },
+                                        child: Container(
+                                          height: MediaQuery.of(context)
+                                              .size
+                                              .height,
+                                          decoration: BoxDecoration(
+                                              color: (genreM == true)
+                                                  ? Colors.black
+                                                  : Colors.white,
+                                              border: Border.all(
+                                                  color: (genreM == true)
+                                                      ? Colors.white
+                                                      : Colors.black)),
+                                          child: Center(
+                                            child: Text(
+                                              'HOMME',
+                                              style: TextStyle(
+                                                  color: (genreM == true)
+                                                      ? Colors.white
+                                                      : Colors.black),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      Container(
+                        height: MediaQuery.of(context).size.height / 6,
+                        width: MediaQuery.of(context).size.width,
+                        // decoration: BoxDecoration(color: Colors.red),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              'Prénom',
+                              style: TextStyle(fontSize: 18),
+                            ),
+                            Container(
+                              height: MediaQuery.of(context).size.height / 12,
+                              width: MediaQuery.of(context).size.width,
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.black)),
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                  focusedBorder: InputBorder.none,
+                                  border: UnderlineInputBorder(),
+                                ),
+                                maxLines: 1,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        height: MediaQuery.of(context).size.height / 6,
+                        width: MediaQuery.of(context).size.width,
+                        // decoration: BoxDecoration(color: Colors.red),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              'Nom',
+                              style: TextStyle(fontSize: 18),
+                            ),
+                            Container(
+                              height: MediaQuery.of(context).size.height / 12,
+                              width: MediaQuery.of(context).size.width,
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.black)),
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                  focusedBorder: InputBorder.none,
+                                  border: UnderlineInputBorder(),
+                                ),
+                                maxLines: 1,
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
                   ),
-               ],
-             ),
-                 Container(
-                    height: 50,
-                    
-                    child: Text("voila voila voila vvoila voila voila voila voila voila voila voila voila voila voila voila voila v voila vv"),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(color: Colors.white),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Container(
+                          height: MediaQuery.of(context).size.height / 6,
+                          width: MediaQuery.of(context).size.width,
+                          // decoration: BoxDecoration(color: Colors.red),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text(
+                                'Pays',
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              Container(
+                                height: MediaQuery.of(context).size.height / 12,
+                                width: MediaQuery.of(context).size.width,
+                                decoration: BoxDecoration(),
+                                child: DropdownButton<String>(
+                                    isExpanded: true,
+                                    value: _btnSelectedVal1,
+                                    onChanged: (String newValue) {
+                                      setState(() {
+                                        _btnSelectedVal1 = newValue;
+                                      });
+                                    },
+                                    items: this._dropDownpaysItems),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Container(
+                        height: MediaQuery.of(context).size.height / 6,
+                        width: MediaQuery.of(context).size.width,
+                        // decoration: BoxDecoration(color: Colors.red),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              'Adresse',
+                              style: TextStyle(fontSize: 18),
+                            ),
+                            Container(
+                              height: MediaQuery.of(context).size.height / 12,
+                              width: MediaQuery.of(context).size.width,
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.black)),
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                  focusedBorder: InputBorder.none,
+                                  border: UnderlineInputBorder(),
+                                ),
+                                maxLines: 1,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        height: MediaQuery.of(context).size.height / 6,
+                        width: MediaQuery.of(context).size.width,
+                        // decoration: BoxDecoration(color: Colors.red),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              'Code Postal',
+                              style: TextStyle(fontSize: 18),
+                            ),
+                            Container(
+                              height: MediaQuery.of(context).size.height / 12,
+                              width: MediaQuery.of(context).size.width,
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.black)),
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                  focusedBorder: InputBorder.none,
+                                  border: UnderlineInputBorder(),
+                                ),
+                                maxLines: 1,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        height: MediaQuery.of(context).size.height / 6,
+                        width: MediaQuery.of(context).size.width,
+                        // decoration: BoxDecoration(color: Colors.red),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              'Ville',
+                              style: TextStyle(fontSize: 18),
+                            ),
+                            Container(
+                              height: MediaQuery.of(context).size.height / 12,
+                              width: MediaQuery.of(context).size.width,
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.black)),
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                  focusedBorder: InputBorder.none,
+                                  border: UnderlineInputBorder(),
+                                ),
+                                maxLines: 1,
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
                   ),
-             Container(
-     height: 50,
-     child: Center(child: Text("CREES Ma BOUTIQUE",
-     style: TextStyle(
-       color: Colors.white
-     ),
-     )),
-     color: Colors.black,
-   ) 
-       ],
-     ),
-   ),
-
-    ],
-      ),
-    ),
-  ),
-      
-    );
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                // height: MediaQuery.of(context).size.height / 1.8,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(color: Colors.white),
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      left: 20.0, right: 20.0, bottom: 10),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          // decoration: BoxDecoration(color: Colors.red),
+                          child: Column(
+                            children: [
+                              Text(
+                                  'Votre Numero de Téléphone ne sera pas aficché publiquement\n Il sera communiqué à un tiers uniquement en cas de remise en main propre de l\'article')
+                            ],
+                          ),
+                        ),
+                      ),
+                      Container(
+                        height: MediaQuery.of(context).size.height / 6,
+                        width: MediaQuery.of(context).size.width,
+                        // decoration: BoxDecoration(color: Colors.red),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              'Téléphone',
+                              style: TextStyle(fontSize: 18),
+                            ),
+                            Container(
+                              height: MediaQuery.of(context).size.height / 12,
+                              width: MediaQuery.of(context).size.width,
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.black)),
+                              child: TextFormField(
+                                keyboardType: TextInputType.number,
+                                decoration: InputDecoration(
+                                  focusedBorder: InputBorder.none,
+                                  border: UnderlineInputBorder(),
+                                ),
+                                maxLines: 1,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      left: 20.0, right: 20.0, bottom: 10),
+                  child: Column(
+                    children: [
+                      Container(
+                        height: MediaQuery.of(context).size.height / 7,
+                        width: MediaQuery.of(context).size.width,
+                        child: Text(
+                            'Le vendeur, s\'il se presente comme un consommateur ou un non-professionnel, alors qu\'il agit à titre professionnel, en court des sanctions'),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                        child: Container(
+                          height: MediaQuery.of(context).size.height / 12,
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                            color: Colors.black,
+                          ),
+                          child: MaterialButton(
+                            onPressed: () {},
+                            splashColor: Colors.white24,
+                            child: Center(
+                              child: Text(
+                                'Valider',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+        ));
   }
 }

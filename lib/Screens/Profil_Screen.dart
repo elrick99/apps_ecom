@@ -4,6 +4,7 @@ import 'package:apps_ecom/Screens/Favoris.dart';
 import 'package:apps_ecom/Screens/Home_Screen.dart';
 import 'package:apps_ecom/Screens/Notifications_Screen.dart';
 import 'package:apps_ecom/Screens/baseAuth.dart';
+import 'package:apps_ecom/Widgets/BackEnd/BottomBar.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -12,9 +13,10 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'Boutique_Screen.dart';
 
 class ProfilScreen extends StatefulWidget {
-   ProfilScreen({Key key, this.auth, this.userId, this.logoutCallback,this.user})
+  ProfilScreen(
+      {Key key, this.auth, this.userId, this.logoutCallback, this.user})
       : super(key: key);
-       
+
   FirebaseUser user;
   final BaseAuth auth;
   final VoidCallback logoutCallback;
@@ -39,7 +41,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
   //   }
   //   widget.user.sendEmailVerification();
   // }
-    signOut() async {
+  signOut() async {
     try {
       await widget.auth.signOut();
       widget.logoutCallback();
@@ -47,9 +49,76 @@ class _ProfilScreenState extends State<ProfilScreen> {
       print(e);
     }
   }
+
+  Widget gmailWidget() {
+    return Container(
+      height: MediaQuery.of(context).size.height / 3.5,
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(color: Colors.white),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Container(
+              height: 110,
+              width: 110,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: NetworkImage(widget.user.photoUrl),
+                      fit: BoxFit.cover),
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(100)),
+            ),
+            Container(
+              child: (widget.user == null)
+                  ? Text(widget.userId)
+                  : Text(widget.user.email,
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget emailWidget() {
+    return Container(
+      height: MediaQuery.of(context).size.height / 3.5,
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(color: Colors.white),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Container(
+              height: 110,
+              width: 110,
+              decoration: BoxDecoration(
+                  // color: Colors.amber,
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(100)),
+              child: Icon(
+                Icons.person,
+                size: 100,
+                color: Colors.grey,
+              ),
+            ),
+            Container(
+              child: (widget.user == null)
+                  ? Text(widget.userId)
+                  : Text(widget.user.email,
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       backgroundColor: Colors.grey[250],
       appBar: AppBar(
@@ -66,37 +135,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
         decoration: BoxDecoration(),
         child: ListView(
           children: [
-            Container(
-              height: MediaQuery.of(context).size.height / 3.5,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(color: Colors.white),
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Container(
-                      height: 110,
-                      width: 110,
-                      decoration: BoxDecoration(
-                          // color: Colors.amber,
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(100)),
-                      child: Icon(
-                        Icons.person,
-                        size: 100,
-                        color: Colors.grey,
-                      ),
-                    ),
-                    Container(
-
-                      child: (widget.user == null)?Text(widget.userId):Text(widget.user.email,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 20)),
-                    )
-                  ],
-                ),
-              ),
-            ),
+            (widget.user != null) ? gmailWidget() : emailWidget(),
             Divider(),
             Container(
               height: MediaQuery.of(context).size.height / 10,
@@ -282,7 +321,8 @@ class _ProfilScreenState extends State<ProfilScreen> {
               ),
             ),
             InkWell(
-             onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (_)=>BoutiqueScreen())),
+              onTap: () => Navigator.push(
+                  context, MaterialPageRoute(builder: (_) => BoutiqueScreen())),
               child: Container(
                 height: MediaQuery.of(context).size.height / 10,
                 width: MediaQuery.of(context).size.width,
@@ -405,14 +445,14 @@ class _ProfilScreenState extends State<ProfilScreen> {
               height: 40,
             ),
             InkWell(
-              onTap: (){
+              onTap: () {
                 FirebaseAuth.instance.signOut();
-                      GoogleSignIn().signOut();
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext context) => HomeScreen()));
-                  // signOut();
+                GoogleSignIn().signOut();
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) => HomeScreen()));
+                // signOut();
               },
               child: Container(
                 height: MediaQuery.of(context).size.height / 10,

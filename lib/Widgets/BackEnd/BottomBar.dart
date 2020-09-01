@@ -1,5 +1,7 @@
 import 'package:apps_ecom/Providers/Models/Cart.dart';
+import 'package:apps_ecom/Screens/BackEnd/Article_List_Admin.dart';
 import 'package:apps_ecom/Screens/BackEnd/Home_Admin.dart';
+import 'package:apps_ecom/Screens/BackEnd/photo.dart';
 import 'package:apps_ecom/Screens/Cart_Screen.dart';
 import 'package:apps_ecom/Screens/Favoris.dart';
 import 'package:apps_ecom/Screens/Home_Screen.dart';
@@ -17,10 +19,10 @@ class BottomBarAdmin extends StatefulWidget {
 class _BottomBarAdminState extends State<BottomBarAdmin> {
   List<Widget> page = [
     HomeAdmin(),
-    Text("Text 2"),
+    ArticleListAdmin(),
     Text("Text 3"),
     Text("Text 4"),
-    Text("Text 5"),
+    Photo(),
   ];
   int _index = 0;
   @override
@@ -52,18 +54,6 @@ class _BottomBarAdminState extends State<BottomBarAdmin> {
                 ),
                 title: ''),
             FloatingNavbarItem(
-                icon: Icon(
-                  Icons.notifications,
-                  color: (_index == 2) ? Colors.white : Colors.black,
-                ),
-                title: ''),
-            FloatingNavbarItem(
-                icon: Icon(
-                  Icons.account_circle,
-                  color: (_index == 3) ? Colors.white : Colors.black,
-                ),
-                title: ''),
-            FloatingNavbarItem(
               icon: Consumer<Cart>(
                 builder: (BuildContext context, cartData, ch) => Badge(
                   child: ch,
@@ -71,12 +61,24 @@ class _BottomBarAdminState extends State<BottomBarAdmin> {
                   color: Colors.black,
                 ),
                 child: Icon(
-                  Icons.add_a_photo,
-                  color: (_index == 4) ? Colors.white : Colors.black,
+                  Icons.notifications,
+                  color: (_index == 2) ? Colors.white : Colors.black,
                 ),
               ),
               title: '',
             ),
+            FloatingNavbarItem(
+                icon: Icon(
+                  Icons.account_circle,
+                  color: (_index == 3) ? Colors.white : Colors.black,
+                ),
+                title: ''),
+            FloatingNavbarItem(
+                icon: Icon(
+                  Icons.add_a_photo,
+                  color: (_index == 4) ? Colors.white : Colors.black,
+                ),
+                title: ''),
           ],
         ),
       ),

@@ -9,7 +9,6 @@ class LoginSignupPage extends StatefulWidget {
 
   final BaseAuth auth;
   final VoidCallback loginCallback;
-   
 
   @override
   State<StatefulWidget> createState() => new _LoginSignupPageState();
@@ -22,7 +21,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
   String _password;
   String _errorMessage;
 
-    bool _isLoginForm;
+  bool _isLoginForm;
   bool _isLoading;
   bool _busy = false;
   FirebaseUser _user;
@@ -96,66 +95,33 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      
-        body: SingleChildScrollView(
-          child: Stack(
-            children: <Widget>[
-               Expanded(child: Container(
-                 height: 100,
-                 color: Colors.grey.shade300,
-                 width: MediaQuery.of(context).size.width,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [                 
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [ 
-                      SizedBox(width: 90,),
-                        Container(      
-                      width: 270,
-                      child: ListTile(
-                        title: Text("MON COMPTE",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20
-                        ),
-                        ),
-                        trailing:  InkWell(
-                          onTap: (){
-                            Navigator.pop(context);
-                          },
-                          child: Icon(Icons.close)),
-                          
-                       
-                      ),
-                    ),
-                    ],
-                  ),
-                         Container(
-                      child: Text("Identifiez-vous pour acceder a votre compte",
-                      style: TextStyle(
-                        color: Colors.black
-                      ),
-                      ),
-                    ),
-                  ],
-                ),
-               ),
-               ),
-              Expanded(
-                child: Container(  
-                  child: Column(
-                    children: [
-                       _showForm(),
-                   _showCircularProgress(),
-                    ],
-                  ),
-                ),
+        appBar: AppBar(
+          iconTheme: IconThemeData(color: Colors.black),
+          backgroundColor: Colors.grey.shade300,
+          elevation: 0,
+          title: Column(
+            children: [
+              Text(
+                "MON COMPTE",
+                style: TextStyle(color: Colors.black, fontSize: 18),
               ),
-             
+              Text(
+                "Identifiez-vous pour acceder a votre compte",
+                style: TextStyle(color: Colors.black, fontSize: 10),
+              ),
             ],
           ),
-        ));
+        ),
+        body: SingleChildScrollView(
+            child: Container(
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            children: [
+              _showForm(),
+              _showCircularProgress(),
+            ],
+          ),
+        )));
   }
 
   Widget _showCircularProgress() {
@@ -193,7 +159,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
 
   Widget _showForm() {
     return new Container(
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.only(left: 8.0, right: 8.0),
         child: new Form(
           key: _formKey,
           child: new ListView(
@@ -227,11 +193,9 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     }
   }
 
-
-
   Widget showEmailInput() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 100.0, 0.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 0.0),
       child: new TextFormField(
         maxLines: 1,
         keyboardType: TextInputType.emailAddress,
@@ -273,17 +237,19 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
       child: SizedBox(
         height: 50,
         child: new FlatButton(
-           shape: new RoundedRectangleBorder(
+            shape: new RoundedRectangleBorder(
                 borderRadius: new BorderRadius.circular(30.0)),
-                color: Colors.black,
+            color: Colors.black,
             child: new Text(
                 _isLoginForm ? 'Creer un compte' : ' Connectez vous ',
-                style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.w300, color: Colors.grey)),
+                style: new TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.w300,
+                    color: Colors.grey)),
             onPressed: toggleFormMode),
       ),
     );
   }
- 
 
   Widget showPrimaryButton() {
     return new Padding(
@@ -302,44 +268,43 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
         ));
   }
 
-    Widget showThistButton(){
+  Widget showThistButton() {
     return Padding(
       padding: EdgeInsets.fromLTRB(0.0, 45.0, 0.0, 0.0),
       child: SizedBox(
         height: 50.0,
         child: InkWell(
-                        onTap: this._busy
-                            ? null
-                            : () async {
-                                try {
-                                  setState(() => this._busy = true);
-                                  final user = await this._googleSignIn();
-                                  this._showUserProfilePage(user);
-                                } catch (e) {
-                                  setState(() => this._busy = false);
-                                }
-                              },
-                        child: Container(
-                          alignment: Alignment.center,
-                          width: MediaQuery.of(context).size.width / 1.5,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(26),
-                            border: Border.all(color: Colors.black),
-                            // color: Color(0xff22C8CF),
-                          ),
-                          child: Text(
-                            "connexion avec google",
-                            style: TextStyle(color: Colors.black, fontSize: 17),
-                          ),
-                        ),
-                      ),
+          onTap: this._busy
+              ? null
+              : () async {
+                  try {
+                    setState(() => this._busy = true);
+                    final user = await this._googleSignIn();
+                    this._showUserProfilePage(user);
+                  } catch (e) {
+                    setState(() => this._busy = false);
+                  }
+                },
+          child: Container(
+            alignment: Alignment.center,
+            width: MediaQuery.of(context).size.width / 1.5,
+            height: 50,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(26),
+              border: Border.all(color: Colors.black),
+              // color: Color(0xff22C8CF),
+            ),
+            child: Text(
+              "connexion avec google",
+              style: TextStyle(color: Colors.black, fontSize: 17),
+            ),
+          ),
+        ),
       ),
     );
-
   }
-  
-      Future<FirebaseUser> _googleSignIn() async {
+
+  Future<FirebaseUser> _googleSignIn() async {
     final curUser = this._user ?? await FirebaseAuth.instance.currentUser();
     if (curUser != null && !curUser.isAnonymous) {
       return curUser;
@@ -360,10 +325,13 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
 
     return user;
   }
-  
-   void _showUserProfilePage(FirebaseUser user) {
+
+  void _showUserProfilePage(FirebaseUser user) {
     Navigator.of(context).push(
-      MaterialPageRoute(builder: (ctx) => ProfilScreen(user: user,)),
+      MaterialPageRoute(
+          builder: (ctx) => ProfilScreen(
+                user: user,
+              )),
     );
   }
 }
