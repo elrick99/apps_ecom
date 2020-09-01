@@ -47,12 +47,10 @@ class _HeaderHomeState extends State<HeaderHome> {
                   Icons.person_pin,
                 ),
                 onPressed: () {
-                  Navigator.push(context,
-<<<<<<< Updated upstream
-                      MaterialPageRoute(builder: (_) => LoginSignupPage()));
-=======
-                      MaterialPageRoute(builder: (_) =>RootPage(auth:  Auth())));
->>>>>>> Stashed changes
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => RootPage(auth: Auth())));
                 }),
             title: Center(
               child: Text(

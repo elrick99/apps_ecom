@@ -47,7 +47,7 @@ class _BoutiqueScreenState extends State<BoutiqueScreen> {
     return Scaffold(
         backgroundColor: Colors.grey[300],
         appBar: AppBar(
-          iconTheme: IconThemeData(color: Colors.black),
+          iconTheme: IconThemeData(color: Color(0xFFee7b77)),
           backgroundColor: Colors.white,
           title: Text(
             "CREER MA BOUTIQUE",

@@ -1,6 +1,8 @@
 import 'package:apps_ecom/Screens/LoginSignupPage.dart';
 import 'package:apps_ecom/Screens/baseAuth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import 'Profil_Screen.dart';
 
@@ -22,6 +24,7 @@ class RootPage extends StatefulWidget {
 class _RootPageState extends State<RootPage> {
   AuthStatus authStatus = AuthStatus.NOT_DETERMINED;
   String _userId = "";
+  FirebaseUser users;
 
   @override
   void initState() {
@@ -29,10 +32,12 @@ class _RootPageState extends State<RootPage> {
     widget.auth.getCurrentUser().then((user) {
       setState(() {
         if (user != null) {
-          _userId = user?.uid;
+          _userId = user?.email;
+          users = user;
         }
-        authStatus =
-            user?.uid == null ? AuthStatus.NOT_LOGGED_IN : AuthStatus.LOGGED_IN;
+        authStatus = user?.email == null
+            ? AuthStatus.NOT_LOGGED_IN
+            : AuthStatus.LOGGED_IN;
       });
     });
   }
@@ -40,7 +45,8 @@ class _RootPageState extends State<RootPage> {
   void loginCallback() {
     widget.auth.getCurrentUser().then((user) {
       setState(() {
-        _userId = user.uid.toString();
+        _userId = user.email.toString();
+        users = user;
       });
     });
     setState(() {
@@ -52,6 +58,7 @@ class _RootPageState extends State<RootPage> {
     setState(() {
       authStatus = AuthStatus.NOT_LOGGED_IN;
       _userId = "";
+      users = null;
     });
   }
 
@@ -78,8 +85,9 @@ class _RootPageState extends State<RootPage> {
         break;
       case AuthStatus.LOGGED_IN:
         if (_userId.length > 0 && _userId != null) {
-          return  ProfilScreen(
+          return ProfilScreen(
             userId: _userId,
+            user: users,
             auth: widget.auth,
             logoutCallback: logoutCallback,
           );

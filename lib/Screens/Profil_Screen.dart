@@ -2,9 +2,11 @@ import 'package:apps_ecom/Screens/Commandes_Screen.dart';
 import 'package:apps_ecom/Screens/Discussions_Screen.dart';
 import 'package:apps_ecom/Screens/Favoris.dart';
 import 'package:apps_ecom/Screens/Home_Screen.dart';
+import 'package:apps_ecom/Screens/MonCompte.dart';
 import 'package:apps_ecom/Screens/Notifications_Screen.dart';
 import 'package:apps_ecom/Screens/baseAuth.dart';
 import 'package:apps_ecom/Widgets/BackEnd/BottomBar.dart';
+import 'package:apps_ecom/Widgets/BottomBar.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -70,7 +72,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
                   borderRadius: BorderRadius.circular(100)),
             ),
             Container(
-              child: (widget.user == null)
+              child: (widget.user.email == null)
                   ? Text(widget.userId)
                   : Text(widget.user.email,
                       style:
@@ -119,9 +121,14 @@ class _ProfilScreenState extends State<ProfilScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.user);
     return Scaffold(
       backgroundColor: Colors.grey[250],
       appBar: AppBar(
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () => Navigator.push(
+                context, MaterialPageRoute(builder: (_) => BottomBar()))),
         iconTheme: IconThemeData(color: Color(0xFFee7b77)),
         backgroundColor: Colors.white,
         title: Text(
@@ -135,29 +142,35 @@ class _ProfilScreenState extends State<ProfilScreen> {
         decoration: BoxDecoration(),
         child: ListView(
           children: [
-            (widget.user != null) ? gmailWidget() : emailWidget(),
+            (widget.user.displayName != null) ? gmailWidget() : emailWidget(),
             Divider(),
-            Container(
-              height: MediaQuery.of(context).size.height / 10,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(color: Colors.white),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Icon(
-                      Icons.edit,
-                      color: Colors.black,
-                    ),
-                    Text(
-                      'Editer Mon Compte',
-                      style: TextStyle(
+            InkWell(
+              onTap: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (_) => MonCompte()));
+              },
+              child: Container(
+                height: MediaQuery.of(context).size.height / 10,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(color: Colors.white),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Icon(
+                        Icons.edit,
                         color: Colors.black,
                       ),
-                    ),
-                    Icon(Icons.arrow_forward_ios, color: Colors.grey)
-                  ],
+                      Text(
+                        'Editer Mon Compte',
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
+                      ),
+                      Icon(Icons.arrow_forward_ios, color: Colors.grey)
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -447,6 +460,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
             InkWell(
               onTap: () {
                 FirebaseAuth.instance.signOut();
+
                 GoogleSignIn().signOut();
                 Navigator.push(
                     context,

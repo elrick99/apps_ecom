@@ -94,6 +94,8 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
 
   @override
   Widget build(BuildContext context) {
+    print('//////////////// AUTH ///////////////');
+    print(FirebaseAuth.instance.currentUser());
     return new Scaffold(
         appBar: AppBar(
           iconTheme: IconThemeData(color: Colors.black),
@@ -241,26 +243,15 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
                 borderRadius: new BorderRadius.circular(30.0)),
             color: Colors.black,
             child: new Text(
-<<<<<<< Updated upstream
                 _isLoginForm ? 'Creer un compte' : ' Connectez vous ',
                 style: new TextStyle(
                     fontSize: 18.0,
                     fontWeight: FontWeight.w300,
                     color: Colors.grey)),
-=======
-                 'Creer un compte',
-                style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.w300, color: Colors.grey)),
->>>>>>> Stashed changes
             onPressed: toggleFormMode),
       ),
     );
   }
-<<<<<<< Updated upstream
-=======
-  
-
- 
->>>>>>> Stashed changes
 
   Widget showPrimaryButton() {
     return new Padding(
@@ -278,7 +269,6 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
           ),
         ));
   }
-  
 
   Widget showThistButton() {
     return Padding(
@@ -330,6 +320,9 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
       idToken: googleAuth.idToken,
     );
     // Note: user.providerData[0].photoUrl == googleUser.photoUrl.
+
+    // FirebaseAuth.instance.currentUser();
+
     final user =
         (await FirebaseAuth.instance.signInWithCredential(credential)).user;
 //    kFirebaseAnalytics.logLogin();
@@ -338,7 +331,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     return user;
   }
 
-  void _showUserProfilePage(FirebaseUser user) {
+  void _showUserProfilePage(FirebaseUser user, {FirebaseAuth users}) {
     Navigator.of(context).push(
       MaterialPageRoute(
           builder: (ctx) => ProfilScreen(
@@ -347,3 +340,15 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     );
   }
 }
+
+/// ***************************************************
+/// GET CURRENT USER WITH FIREBASE
+///
+
+/*
+
+get firebaseAuth => FirebaseAuth.instance;
+
+firebaseAuth
+
+*/

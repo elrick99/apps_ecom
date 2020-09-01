@@ -10,6 +10,7 @@ import 'package:apps_ecom/Screens/Details_Screen.dart';
 import 'package:apps_ecom/Screens/Discussions_Screen.dart';
 import 'package:apps_ecom/Screens/Favoris.dart';
 import 'package:apps_ecom/Screens/Mes_Retours_Screen.dart';
+import 'package:apps_ecom/Screens/MonCompte.dart';
 import 'package:apps_ecom/Screens/Notifications_Screen.dart';
 import 'package:apps_ecom/Screens/Profil_Screen.dart';
 import 'package:apps_ecom/Screens/Search_Screen.dart';
@@ -60,7 +61,7 @@ class MyApp extends StatelessWidget {
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: BottomBar(),
-        // home: BoutiqueScreen(),
+        // home: MonCompte(),
         // routes: {
         //   '/detail': (context) => DetailsScreen(),
         //   '/profil': (context) => ProfilScreen(),
