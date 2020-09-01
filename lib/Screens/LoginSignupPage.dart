@@ -1,3 +1,4 @@
+import 'package:apps_ecom/Screens/CreerMonCompte.dart';
 import 'package:apps_ecom/Screens/Profil_Screen.dart';
 import 'package:apps_ecom/Screens/baseAuth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
