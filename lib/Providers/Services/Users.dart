@@ -12,9 +12,10 @@ class UsersService with ChangeNotifier{
 
   List<User> get items=>[..._items];
 
-  Future<void> addUser( String password, prenom, genre, email) async{
+  Future<void> addUser( String password, prenom, genre, email, nom) async{
      final String url="https://appsecom-839d9.firebaseio.com/user.json";
      final Map< String, dynamic> data= {
+       "nom":nom,
         "prenom":prenom,
         "email":email,
         "password":password,
@@ -26,6 +27,7 @@ class UsersService with ChangeNotifier{
         var response = await http.post(url, body:json.encode(data));
         var newUser= User( 
           id:json.decode(response.body)['nom'],
+          nom: nom,
           prenom: prenom,
           email: email,
           password: password,

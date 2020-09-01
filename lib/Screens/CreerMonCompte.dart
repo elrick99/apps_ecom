@@ -20,6 +20,7 @@ User user;
   bool _checkBoxval=false;
   bool _checkBoxval1=false;
   String genre="";
+  String nom="";
   String prenom="";
   String email="";
   String password="";
@@ -28,7 +29,7 @@ User user;
   @override
   Widget build(BuildContext context) {
   final provider=  Provider.of<UsersService>(context);
-       print("gooooooooooooooooooooooooo");
+       print("/////////suc/////////");
        print(provider.items.length);
   
     return Scaffold(
@@ -48,7 +49,7 @@ User user;
                 height: 10,
               ),
               Container(
-                height: MediaQuery.of(context).size.height / 1.4,
+               
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(color: Colors.white),
                 child: Padding(
@@ -149,6 +150,38 @@ User user;
                               )
                             ],
                           ),
+                        ),
+                      ),
+                          Container(
+                        height: MediaQuery.of(context).size.height / 6,
+                        width: MediaQuery.of(context).size.width,
+                        // decoration: BoxDecoration(color: Colors.red),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              'Nom',
+                              style: TextStyle(fontSize: 18),
+                            ),
+                            Container(
+                              height: MediaQuery.of(context).size.height / 12,
+                              width: MediaQuery.of(context).size.width,
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.black)),
+                              child: TextFormField(
+                                onChanged: (String val){
+                                  setState(() {
+                                    nom = val;
+                                  });
+                                },
+                                decoration: InputDecoration(
+                                  focusedBorder: InputBorder.none,
+                                  border: UnderlineInputBorder(),
+                                ),
+                                maxLines: 1,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       Container(
@@ -371,7 +404,7 @@ User user;
                             InkWell(
                               onTap: (){
                                 setState(() {
-                                  provider.addUser(password, prenom, genre, email);
+                                  provider.addUser(password, prenom, genre, email, nom);
                                   // user.prenom = "<<Bonjour";
                                   print(password);
                                   print(prenom);
