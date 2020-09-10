@@ -1,4 +1,5 @@
 import 'package:apps_ecom/Providers/Models/Product.dart';
+import 'package:apps_ecom/Providers/Services/Products.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -6,6 +7,8 @@ class ArticleItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final product = Provider.of<Product>(context, listen: false);
+    final providerProduct = Provider.of<Products>(context);
+    // print(providerProduct.postFavoris(key: product.code));
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: Container(
@@ -30,6 +33,7 @@ class ArticleItem extends StatelessWidget {
                                   : Icons.favorite_border),
                               onPressed: () {
                                 product.toggleFavoriteStatus();
+                                providerProduct.postFavoris(key: product.code);
                               },
                               color: Color(0xFFee7b77)),
                         ),

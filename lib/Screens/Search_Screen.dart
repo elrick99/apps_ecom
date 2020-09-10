@@ -9,8 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart' as english_words;
 import 'package:provider/provider.dart';
 
-// Adapted from search demo in offical flutter gallery:
-// https://github.com/flutter/flutter/blob/master/examples/flutter_gallery/lib/demo/material/search_demo.dart
 class SearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -66,11 +64,15 @@ class SearchBar extends StatelessWidget {
                     itemCount: e.sousCats.length,
                     itemBuilder: (_, index) {
                       return InkWell(
-                        onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (_)=>ListArticle(id: e.sousCats[index].id,)));
-                          
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => ListArticle(
+                                        id: e.sousCats[index].id,
+                                      )));
                         },
-                                              child: Padding(
+                        child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Container(
                               height: MediaQuery.of(context).size.height / 6,

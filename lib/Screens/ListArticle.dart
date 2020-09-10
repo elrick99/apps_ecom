@@ -15,8 +15,8 @@ class ListArticle extends StatelessWidget {
     final loadedProduct =
         Provider.of<SousCategories>(context, listen: false).findById(this.id);
     final products = Provider.of<Products>(context).items;
-
-    // print();
+    // print('///////////PRODUCTS///////////');
+    // print(products);
 
     return Scaffold(
         appBar: AppBar(

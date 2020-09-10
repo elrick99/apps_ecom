@@ -1,10 +1,12 @@
 import 'package:apps_ecom/Providers/Models/Cart.dart';
 import 'package:apps_ecom/Providers/Models/Product.dart';
+import 'package:apps_ecom/Providers/Services/Boutiques.dart';
 import 'package:apps_ecom/Providers/Services/Categories.dart';
 import 'package:apps_ecom/Providers/Services/Products.dart';
 import 'package:apps_ecom/Providers/Services/SousCategories.dart';
 import 'package:apps_ecom/Providers/Services/Users.dart';
 import 'package:apps_ecom/Screens/BackEnd/Home_Admin.dart';
+import 'package:apps_ecom/Screens/BackEnd/Ajout_Article.dart';
 import 'package:apps_ecom/Screens/Boutique_Screen.dart';
 import 'package:apps_ecom/Screens/Commandes_Screen.dart';
 import 'package:apps_ecom/Screens/Details_Screen.dart';
@@ -22,7 +24,6 @@ import 'package:apps_ecom/Widgets/Footer.dart';
 import 'package:flutter/material.dart';
 import 'Screens/Home_Screen.dart';
 import 'package:provider/provider.dart';
-
 import 'Screens/Reglages_Screen.dart';
 
 void main() {
@@ -46,7 +47,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(
           value: Cart(),
         ),
-        ChangeNotifierProvider.value(value: UsersService())
+        ChangeNotifierProvider.value(value: UsersService()),
+        ChangeNotifierProvider.value(value: Boutiques())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -63,7 +65,7 @@ class MyApp extends StatelessWidget {
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: BottomBar(),
-        // home: MonCompte(),
+        // home: Photo(),
         // routes: {
         //   '/detail': (context) => DetailsScreen(),
         //   '/profil': (context) => ProfilScreen(),

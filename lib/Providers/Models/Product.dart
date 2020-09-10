@@ -5,6 +5,7 @@ enum Etat { Neuf, QuasiNeuf, Amoche }
 
 class Product with ChangeNotifier {
   final int id;
+  final String code;
   final String title;
   final String description;
   final double price;
@@ -20,10 +21,11 @@ class Product with ChangeNotifier {
   final int categorie;
   final int sousCategorie;
   List<User> userFavoris;
-  final User admin;
+  final String admin;
 
   Product(
       {@required this.id,
+      @required this.code,
       @required this.title,
       @required this.description,
       @required this.price,
@@ -41,8 +43,42 @@ class Product with ChangeNotifier {
       this.userFavoris,
       this.admin});
 
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'title': title,
+        'description': description,
+        'price': price,
+        'etat': etat == Etat.Neuf ? 'Neuf' : 'QuasiNeuf',
+        'isFavorite': isFavorite,
+        'point': point,
+        'picture': picture,
+        'picture1': picture1,
+        'picture2': picture2,
+        'picture3': picture3,
+        'taille': taille,
+        'marque': marque,
+        'categorie': categorie,
+        'sousCategorie': sousCategorie,
+        'userFavoris': this.userFavoris != null
+            ? this.userFavoris.map((i) => i.toJson()).toList()
+            : null,
+        'admin': admin,
+      };
+
   void toggleFavoriteStatus() {
     isFavorite = !isFavorite;
     notifyListeners();
   }
+}
+
+class AllProducts {
+  AllProducts({
+    this.products,
+  });
+
+  Product products;
+
+  Map<String, dynamic> toJson() => {
+        "products": products.toJson(),
+      };
 }

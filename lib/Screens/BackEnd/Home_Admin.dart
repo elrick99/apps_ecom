@@ -1,23 +1,34 @@
+import 'package:apps_ecom/Providers/Models/Boutique.dart';
+import 'package:apps_ecom/Providers/Services/Boutiques.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:provider/provider.dart';
 
 class HomeAdmin extends StatefulWidget {
-  HomeAdmin({Key key}) : super(key: key);
+  final FirebaseUser user;
+  final Boutique boutique;
+  HomeAdmin({Key key, this.user, this.boutique}) : super(key: key);
 
   @override
   _HomeAdminState createState() => _HomeAdminState();
 }
 
 class _HomeAdminState extends State<HomeAdmin> {
+  // FirebaseAuth user;
   double _progress = 20;
   get downloadProgress => _progress;
   @override
   Widget build(BuildContext context) {
+    // print('rrrrrrrrrrrrrrrrrrrr');
+    // print(widget.boutique.description);
+    final providerB = Provider.of<Boutiques>(context);
+    // print(providerB.item);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text(
-          'Hello, Elrick',
+          'Hello, ${widget.user.displayName}',
           style: TextStyle(
             color: Colors.black,
           ),
@@ -63,7 +74,7 @@ class _HomeAdminState extends State<HomeAdmin> {
                               Expanded(
                                 child: Container(
                                   decoration: BoxDecoration(
-                                      color: Color(0xFF090252),
+                                      color: Color(0xFF562ec2),
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Padding(
                                     padding: const EdgeInsets.all(4.0),
@@ -126,7 +137,7 @@ class _HomeAdminState extends State<HomeAdmin> {
                               Expanded(
                                 child: Container(
                                   decoration: BoxDecoration(
-                                      color: Color(0xFF013751),
+                                      color: Color(0xFF562ec2),
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Padding(
                                     padding: const EdgeInsets.all(4.0),
@@ -189,7 +200,7 @@ class _HomeAdminState extends State<HomeAdmin> {
                               Expanded(
                                 child: Container(
                                   decoration: BoxDecoration(
-                                      color: Color(0xFF562fbe),
+                                      color: Color(0xFF562ec2),
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Padding(
                                     padding: const EdgeInsets.all(4.0),
@@ -296,37 +307,41 @@ class _HomeAdminState extends State<HomeAdmin> {
                                     height:
                                         MediaQuery.of(context).size.height / 7,
                                     width: MediaQuery.of(context).size.width,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Eaning in March',
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              color: Color(0xFF562ec2)),
-                                        ),
-                                        Expanded(
-                                            child: Container(
-                                          child: Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text('\$ 80000000',
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 20)),
-                                              Icon(
-                                                Icons.trending_up,
-                                                size: 40,
-                                              )
-                                            ],
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Eaning in March',
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Color(0xFF562ec2)),
                                           ),
-                                        ))
-                                      ],
+                                          Expanded(
+                                              child: Container(
+                                            child: Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text('\$ 80000000',
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 20)),
+                                                Icon(
+                                                  Icons.trending_up,
+                                                  size: 40,
+                                                )
+                                              ],
+                                            ),
+                                          ))
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 )

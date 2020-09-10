@@ -1,16 +1,34 @@
+import 'package:apps_ecom/Providers/Models/Boutique.dart';
+import 'package:apps_ecom/Providers/Models/User.dart';
+import 'package:apps_ecom/Providers/Services/Boutiques.dart';
+import 'package:apps_ecom/Providers/Services/Users.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 enum TypeOptions { Particulier, Createur, Bloggeur, VenderPro }
 
 class BoutiqueScreen extends StatefulWidget {
-  const BoutiqueScreen({Key key}) : super(key: key);
+  final FirebaseUser user;
+  const BoutiqueScreen({Key key, this.user}) : super(key: key);
   @override
   _BoutiqueScreenState createState() => _BoutiqueScreenState();
 }
 
 class _BoutiqueScreenState extends State<BoutiqueScreen> {
+  User users;
   bool genreF = true;
   bool genreM = false;
+
+  /**
+   * Input
+   */
+  String description;
+  String adresse;
+  String codePostal;
+  String ville;
+  String telephone;
+
   static const menuItems = <String>[
     'PARTICULIER',
     'BLOGGEUR',
@@ -42,8 +60,45 @@ class _BoutiqueScreenState extends State<BoutiqueScreen> {
       .toList();
   String _btnSelectedVal = 'PARTICULIER';
   String _btnSelectedVal1 = 'COTE D\'IVOIRE';
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    final provider = Provider.of<UsersService>(context);
+    provider.getUser();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<UsersService>(context, listen: true);
+
+    final providerB = Provider.of<Boutiques>(context);
+    var etat = provider.wheremail(widget.user.email);
+    if (etat == true)
+      return Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(color: Colors.white),
+          child: Center(
+              child: CircularProgressIndicator(
+            backgroundColor: Colors.white,
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+          )));
+    else
+      users = provider.findById(widget.user.email);
+    // print('//////////////////USER////////////////');
+    // print(users.genre);
+    // users.genre == null ? print('Aucun Genre') : print('Genre');
+    if (users.genre == OptionGenre.Femme) {
+      genreM = false;
+      genreF = true;
+    } else {
+      genreM = true;
+      genreF = false;
+    }
+
+    // print(widget.user);
     return Scaffold(
         backgroundColor: Colors.grey[300],
         appBar: AppBar(
@@ -88,6 +143,7 @@ class _BoutiqueScreenState extends State<BoutiqueScreen> {
                                     onChanged: (String newValue) {
                                       setState(() {
                                         _btnSelectedVal = newValue;
+                                        print(_btnSelectedVal);
                                       });
                                     },
                                     items: this._dropDownMenuItems),
@@ -113,6 +169,11 @@ class _BoutiqueScreenState extends State<BoutiqueScreen> {
                               decoration: BoxDecoration(
                                   border: Border.all(color: Colors.black)),
                               child: TextFormField(
+                                onChanged: (String valueDesc) {
+                                  setState(() {
+                                    description = valueDesc;
+                                  });
+                                },
                                 decoration: InputDecoration(
                                   focusedBorder: InputBorder.none,
                                   border: UnderlineInputBorder(),
@@ -162,10 +223,10 @@ class _BoutiqueScreenState extends State<BoutiqueScreen> {
                                     Expanded(
                                       child: InkWell(
                                         onTap: () {
-                                          setState(() {
-                                            genreF = true;
-                                            genreM = false;
-                                          });
+                                          // setState(() {
+                                          //   genreF = true;
+                                          //   genreM = false;
+                                          // });
                                         },
                                         child: Container(
                                           height: MediaQuery.of(context)
@@ -195,10 +256,10 @@ class _BoutiqueScreenState extends State<BoutiqueScreen> {
                                     Expanded(
                                       child: InkWell(
                                         onTap: () {
-                                          setState(() {
-                                            genreM = true;
-                                            genreF = false;
-                                          });
+                                          // setState(() {
+                                          //   genreM = true;
+                                          //   genreF = false;
+                                          // });
                                         },
                                         child: Container(
                                           height: MediaQuery.of(context)
@@ -247,13 +308,19 @@ class _BoutiqueScreenState extends State<BoutiqueScreen> {
                               width: MediaQuery.of(context).size.width,
                               decoration: BoxDecoration(
                                   border: Border.all(color: Colors.black)),
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                  focusedBorder: InputBorder.none,
-                                  border: UnderlineInputBorder(),
-                                ),
-                                maxLines: 1,
-                              ),
+                              child: (users.password == "")
+                                  ? Center(
+                                      child: Text(
+                                      users.prenom,
+                                      style: TextStyle(fontSize: 18),
+                                    ))
+                                  : TextFormField(
+                                      decoration: InputDecoration(
+                                        focusedBorder: InputBorder.none,
+                                        border: UnderlineInputBorder(),
+                                      ),
+                                      maxLines: 1,
+                                    ),
                             ),
                           ],
                         ),
@@ -274,13 +341,19 @@ class _BoutiqueScreenState extends State<BoutiqueScreen> {
                               width: MediaQuery.of(context).size.width,
                               decoration: BoxDecoration(
                                   border: Border.all(color: Colors.black)),
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                  focusedBorder: InputBorder.none,
-                                  border: UnderlineInputBorder(),
-                                ),
-                                maxLines: 1,
-                              ),
+                              child: (users.password == "")
+                                  ? Center(
+                                      child: Text(
+                                      users.nom,
+                                      style: TextStyle(fontSize: 18),
+                                    ))
+                                  : TextFormField(
+                                      decoration: InputDecoration(
+                                        focusedBorder: InputBorder.none,
+                                        border: UnderlineInputBorder(),
+                                      ),
+                                      maxLines: 1,
+                                    ),
                             ),
                           ],
                         ),
@@ -322,6 +395,7 @@ class _BoutiqueScreenState extends State<BoutiqueScreen> {
                                     onChanged: (String newValue) {
                                       setState(() {
                                         _btnSelectedVal1 = newValue;
+                                        print(_btnSelectedVal1);
                                       });
                                     },
                                     items: this._dropDownpaysItems),
@@ -347,6 +421,11 @@ class _BoutiqueScreenState extends State<BoutiqueScreen> {
                               decoration: BoxDecoration(
                                   border: Border.all(color: Colors.black)),
                               child: TextFormField(
+                                onChanged: (String valueAdd) {
+                                  setState(() {
+                                    adresse = valueAdd;
+                                  });
+                                },
                                 decoration: InputDecoration(
                                   focusedBorder: InputBorder.none,
                                   border: UnderlineInputBorder(),
@@ -374,6 +453,11 @@ class _BoutiqueScreenState extends State<BoutiqueScreen> {
                               decoration: BoxDecoration(
                                   border: Border.all(color: Colors.black)),
                               child: TextFormField(
+                                onChanged: (String valueCodPos) {
+                                  setState(() {
+                                    codePostal = valueCodPos;
+                                  });
+                                },
                                 decoration: InputDecoration(
                                   focusedBorder: InputBorder.none,
                                   border: UnderlineInputBorder(),
@@ -401,6 +485,11 @@ class _BoutiqueScreenState extends State<BoutiqueScreen> {
                               decoration: BoxDecoration(
                                   border: Border.all(color: Colors.black)),
                               child: TextFormField(
+                                onChanged: (String valueVil) {
+                                  setState(() {
+                                    ville = valueVil;
+                                  });
+                                },
                                 decoration: InputDecoration(
                                   focusedBorder: InputBorder.none,
                                   border: UnderlineInputBorder(),
@@ -457,7 +546,13 @@ class _BoutiqueScreenState extends State<BoutiqueScreen> {
                               decoration: BoxDecoration(
                                   border: Border.all(color: Colors.black)),
                               child: TextFormField(
-                                keyboardType: TextInputType.number,
+                                onChanged: (String valueTel) {
+                                  setState(() {
+                                    telephone = valueTel;
+                                    print(telephone);
+                                  });
+                                },
+                                keyboardType: TextInputType.phone,
                                 decoration: InputDecoration(
                                   focusedBorder: InputBorder.none,
                                   border: UnderlineInputBorder(),
@@ -497,7 +592,22 @@ class _BoutiqueScreenState extends State<BoutiqueScreen> {
                             color: Colors.black,
                           ),
                           child: MaterialButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              providerB.postBoutique(
+                                  _btnSelectedVal,
+                                  description,
+                                  User(
+                                      id: users.id,
+                                      nom: users.nom,
+                                      prenom: users.prenom,
+                                      email: users.email,
+                                      genre: users.genre,
+                                      telnumber: telephone,
+                                      codePostal: codePostal,
+                                      ville: ville,
+                                      pays: _btnSelectedVal,
+                                      adress1: adresse));
+                            },
                             splashColor: Colors.white24,
                             child: Center(
                               child: Text(

@@ -1,11 +1,17 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class MonCompte extends StatefulWidget {
+  final FirebaseUser user;
+
+  const MonCompte({Key key, this.user}) : super(key: key);
   @override
   _MonCompteState createState() => _MonCompteState();
 }
 
 class _MonCompteState extends State<MonCompte> {
+  FirebaseAuth auth;
+  String motpass;
   bool genreF = true;
   bool genreM = false;
   @override
@@ -234,13 +240,11 @@ class _MonCompteState extends State<MonCompte> {
                             width: MediaQuery.of(context).size.width,
                             decoration: BoxDecoration(
                                 border: Border.all(color: Colors.black)),
-                            child: TextFormField(
-                              keyboardType: TextInputType.emailAddress,
-                              decoration: InputDecoration(
-                                focusedBorder: InputBorder.none,
-                                border: UnderlineInputBorder(),
+                            child: Center(
+                              child: Text(
+                                widget.user.email,
+                                style: TextStyle(fontSize: 18),
                               ),
-                              maxLines: 1,
                             ),
                           ),
                         ],
@@ -309,21 +313,112 @@ class _MonCompteState extends State<MonCompte> {
             SizedBox(
               height: 10,
             ),
-            Container(
-              height: MediaQuery.of(context).size.height / 10,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(color: Colors.white),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Icon(Icons.vpn_key),
-                  Text(
-                    'Changer le Mot de Passe',
-                    style: TextStyle(fontSize: 18),
+            (widget.user.photoUrl == null)
+                ? InkWell(
+                    onTap: () {
+                      print(1);
+                      return showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              content: Container(
+                                height: MediaQuery.of(context).size.height / 2,
+                                width: MediaQuery.of(context).size.width,
+                                decoration: BoxDecoration(),
+                                child: Column(
+                                  children: [
+                                    Text('Entrer le Nouveau mot de pass'),
+                                    Container(
+                                      height:
+                                          MediaQuery.of(context).size.height /
+                                              6,
+                                      width: MediaQuery.of(context).size.width,
+                                      // decoration: BoxDecoration(color: Colors.red),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: [
+                                          Text(
+                                            'Mot de Passe',
+                                            style: TextStyle(fontSize: 18),
+                                          ),
+                                          Container(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height /
+                                                12,
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            decoration: BoxDecoration(
+                                                border: Border.all(
+                                                    color: Colors.black)),
+                                            child: TextFormField(
+                                              obscuringCharacter: '*',
+                                              onChanged: (String val) {
+                                                setState(() {
+                                                  motpass = val;
+                                                });
+                                              },
+                                              validator: (value) => value
+                                                      .isEmpty
+                                                  ? 'Password can\'t be empty'
+                                                  : null,
+                                              onSaved: (value) =>
+                                                  motpass = value,
+                                              decoration: InputDecoration(
+                                                focusedBorder: InputBorder.none,
+                                                border: UnderlineInputBorder(),
+                                              ),
+                                              maxLines: 1,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      height: 40,
+                                      width: 200,
+                                      decoration:
+                                          BoxDecoration(color: Colors.black),
+                                      child: MaterialButton(
+                                        onPressed: () {
+                                          // print(motpass);
+                                          // widget.user.reauthenticateWithCredential(credential)
+                                          widget.user.updatePassword(motpass);
+                                          Navigator.pop(context);
+                                        },
+                                        child: Center(
+                                          child: Text('Valider',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 20)),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
+                          });
+                    },
+                    child: Container(
+                      height: MediaQuery.of(context).size.height / 10,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(color: Colors.white),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Icon(Icons.vpn_key),
+                          Text(
+                            'Changer le Mot de Passe',
+                            style: TextStyle(fontSize: 18),
+                          )
+                        ],
+                      ),
+                    ),
                   )
-                ],
-              ),
-            )
+                : Text('')
           ],
         ),
       ),

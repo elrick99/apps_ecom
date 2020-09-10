@@ -1,240 +1,273 @@
+import 'dart:io';
+
+import 'package:apps_ecom/Providers/Models/Boutique.dart';
 import 'package:apps_ecom/Providers/Models/Product.dart';
+import 'package:apps_ecom/Providers/Models/User.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class Products with ChangeNotifier {
-  List<Product> _items = [
-    Product(
-        id: 0,
-        title: 'Tetine',
-        description: 'Meilleur Prix',
-        price: 470.90,
-        etat: Etat.Neuf,
-        point: 4,
-        picture:
-            'https://www.cdiscount.com/pdt2/1/7/5/1/700x700/mp20720175/rw/basket-nike-air-max-97-lx-noir-av1165-001.jpg',
-        picture1:
-            'https://images.fr.shopping.rakuten.com/photo/basket-nike-air-max-97-921826-013-1230178019_ML.jpg',
-        picture2:
-            'https://images.fr.shopping.rakuten.com/photo/basket-nike-air-max-97-qs-at5458-002-1360318653_ML.jpg',
-        picture3:
-            'https://downtownstock.com/40283-large_default/nike-basket-nike-w-air-max-97-lx-ar7621-001.jpg',
-        taille: '39',
-        marque: 'Nike',
-        categorie: 1,
-        sousCategorie: 12),
-    Product(
-        id: 1,
-        title: 'Pantalon',
-        description: 'Meilleur Prix',
-        price: 470.90,
-        etat: Etat.Neuf,
-        point: 4,
-        picture:
-            'https://www.cdiscount.com/pdt2/1/7/5/1/700x700/mp20720175/rw/basket-nike-air-max-97-lx-noir-av1165-001.jpg',
-        picture1:
-            'https://images.fr.shopping.rakuten.com/photo/basket-nike-air-max-97-921826-013-1230178019_ML.jpg',
-        picture2:
-            'https://images.fr.shopping.rakuten.com/photo/basket-nike-air-max-97-qs-at5458-002-1360318653_ML.jpg',
-        picture3:
-            'https://downtownstock.com/40283-large_default/nike-basket-nike-w-air-max-97-lx-ar7621-001.jpg',
-        taille: '39',
-        marque: 'Nike',
-        categorie: 1,
-        sousCategorie: 12),
-    Product(
-        id: 2,
-        title: 'Basket',
-        description: 'Chemise Bleu',
-        price: 470.90,
-        etat: Etat.Amoche,
-        point: 2,
-        picture:
-            'https://downtownstock.com/40283-large_default/nike-basket-nike-w-air-max-97-lx-ar7621-001.jpg',
-        picture1:
-            'https://images.fr.shopping.rakuten.com/photo/basket-nike-air-max-97-921826-013-1230178019_ML.jpg',
-        picture2:
-            'https://images.fr.shopping.rakuten.com/photo/basket-nike-air-max-97-qs-at5458-002-1360318653_ML.jpg',
-        picture3:
-            'https://downtownstock.com/40283-large_default/nike-basket-nike-w-air-max-97-lx-ar7621-001.jpg',
-        taille: '39',
-        marque: 'Nike',
-        categorie: 1,
-        sousCategorie: 5),
-    Product(
-        id: 3,
-        title: 'Montre Homme',
-        description: 'Meilleur Prix',
-        price: 470.90,
-        etat: Etat.Neuf,
-        point: 4,
-        picture:
-            'https://images.fr.shopping.rakuten.com/photo/basket-nike-air-max-97-qs-at5458-002-1360318653_ML.jpg',
-        picture1:
-            'https://images.fr.shopping.rakuten.com/photo/basket-nike-air-max-97-921826-013-1230178019_ML.jpg',
-        picture2:
-            'https://images.fr.shopping.rakuten.com/photo/basket-nike-air-max-97-qs-at5458-002-1360318653_ML.jpg',
-        picture3:
-            'https://downtownstock.com/40283-large_default/nike-basket-nike-w-air-max-97-lx-ar7621-001.jpg',
-        taille: '39',
-        marque: 'Nike',
-        categorie: 1,
-        sousCategorie: 6),
-    Product(
-        id: 4,
-        title: 'Parfumns',
-        description: 'Meilleur Prix',
-        price: 500.90,
-        etat: Etat.QuasiNeuf,
-        point: 4,
-        picture:
-            'https://images.fr.shopping.rakuten.com/photo/basket-nike-air-max-97-921826-013-1230178019_ML.jpg',
-        picture1:
-            'https://images.fr.shopping.rakuten.com/photo/basket-nike-air-max-97-qs-at5458-002-1360318653_ML.jpg',
-        picture2:
-            'https://cdn.def-shop.com/original/nike-baskets-multicolore-702802.jpg',
-        picture3:
-            'https://downtownstock.com/40283-large_default/nike-basket-nike-w-air-max-97-lx-ar7621-001.jpg',
-        taille: '39',
-        marque: 'Nike',
-        categorie: 2,
-        sousCategorie: 8),
-    Product(
-        id: 5,
-        title: 'Basket Nike Air',
-        description: 'Meilleur Prix',
-        price: 470.90,
-        etat: Etat.QuasiNeuf,
-        point: 4,
-        picture:
-            'https://cdn.def-shop.com/original/nike-baskets-multicolore-702802.jpg',
-        picture1:
-            'https://images.fr.shopping.rakuten.com/photo/basket-nike-air-max-97-921826-013-1230178019_ML.jpg',
-        picture2:
-            'https://images.fr.shopping.rakuten.com/photo/basket-nike-air-max-97-qs-at5458-002-1360318653_ML.jpg',
-        picture3:
-            'https://downtownstock.com/40283-large_default/nike-basket-nike-w-air-max-97-lx-ar7621-001.jpg',
-        taille: '39',
-        marque: 'Nike',
-        categorie: 2,
-        sousCategorie: 5),
-    Product(
-        id: 6,
-        title: 'Poudres',
-        description: 'Meilleur Prix',
-        price: 470.90,
-        etat: Etat.QuasiNeuf,
-        point: 4,
-        picture:
-            'https://static.nike.com/a/images/f_auto/dpr_2.0/h_375,c_limit/8796a413-05cd-4db1-8e5f-1542d8b61cec/nike-basketball.jpg',
-        picture1:
-            'https://images.fr.shopping.rakuten.com/photo/basket-nike-air-max-97-921826-013-1230178019_ML.jpg',
-        picture2:
-            'https://images.fr.shopping.rakuten.com/photo/basket-nike-air-max-97-qs-at5458-002-1360318653_ML.jpg',
-        picture3:
-            'https://downtownstock.com/40283-large_default/nike-basket-nike-w-air-max-97-lx-ar7621-001.jpg',
-        taille: '39',
-        marque: 'Nike',
-        categorie: 3,
-        sousCategorie: 9),
-    Product(
-        id: 7,
-        title: 'Parfumn Hello',
-        description: 'Meilleur Prix',
-        price: 470.90,
-        etat: Etat.QuasiNeuf,
-        point: 4,
-        picture:
-            'https://static.galerieslafayette.com/media/596/59672481/G_59672481_325_VFP_1.jpg',
-        picture1:
-            'https://images.fr.shopping.rakuten.com/photo/basket-nike-air-max-97-921826-013-1230178019_ML.jpg',
-        picture2:
-            'https://images.fr.shopping.rakuten.com/photo/basket-nike-air-max-97-qs-at5458-002-1360318653_ML.jpg',
-        picture3:
-            'https://downtownstock.com/40283-large_default/nike-basket-nike-w-air-max-97-lx-ar7621-001.jpg',
-        taille: '39',
-        marque: 'Nike',
-        categorie: 4,
-        sousCategorie: 10),
-    Product(
-        id: 8,
-        title: 'Parfumn Hella ',
-        description: 'Synthétique Une nouvelle version de nos chaussures',
-        price: 209.99,
-        etat: Etat.QuasiNeuf,
-        point: 4,
-        picture:
-            'https://www.cdiscount.com/pdt2/1/7/5/1/700x700/mp20720175/rw/basket-nike-air-max-97-lx-noir-av1165-001.jpg',
-        picture1:
-            'https://images.fr.shopping.rakuten.com/photo/basket-nike-air-max-97-921826-013-1230178019_ML.jpg',
-        picture2:
-            'https://images.fr.shopping.rakuten.com/photo/basket-nike-air-max-97-qs-at5458-002-1360318653_ML.jpg',
-        picture3:
-            'https://downtownstock.com/40283-large_default/nike-basket-nike-w-air-max-97-lx-ar7621-001.jpg',
-        taille: '39',
-        marque: 'Nike',
-        categorie: 5,
-        sousCategorie: 11),
-    Product(
-        id: 9,
-        title: 'Chapeau Enfant',
-        description:
-            'CuirRafraîchis ton style avec les baskets Air Force 1 Shadow',
-        price: 108.90,
-        etat: Etat.Neuf,
-        point: 4,
-        picture:
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQtjAyfltQNPQQjkVrwP6bEnArECnykZ-MGOw&usqp=CAU',
-        picture1:
-            'https://images.fr.shopping.rakuten.com/photo/basket-nike-air-max-97-921826-013-1230178019_ML.jpg',
-        picture2:
-            'https://images.fr.shopping.rakuten.com/photo/basket-nike-air-max-97-qs-at5458-002-1360318653_ML.jpg',
-        picture3:
-            'https://downtownstock.com/40283-large_default/nike-basket-nike-w-air-max-97-lx-ar7621-001.jpg',
-        taille: '39',
-        marque: 'Nike',
-        categorie: 5,
-        sousCategorie: 6),
-    Product(
-        id: 10,
-        title: 'Ballerine',
-        description: 'collection de Nike dans notre catalogue de Baskets',
-        price: 179.95,
-        etat: Etat.QuasiNeuf,
-        point: 4,
-        picture:
-            'https://www.dmsports.fr/9728-thickbox_default/basket-nike-air-max-90-ltr-ps.jpg',
-        picture1:
-            'https://images.fr.shopping.rakuten.com/photo/basket-nike-air-max-97-921826-013-1230178019_ML.jpg',
-        picture2:
-            'https://images.fr.shopping.rakuten.com/photo/basket-nike-air-max-97-qs-at5458-002-1360318653_ML.jpg',
-        picture3:
-            'https://downtownstock.com/40283-large_default/nike-basket-nike-w-air-max-97-lx-ar7621-001.jpg',
-        taille: '39',
-        marque: 'Nike',
-        categorie: 3,
-        sousCategorie: 5),
-    Product(
-        id: 11,
-        title: 'Tee-Shirt',
-        description: 'asket nike air max 95 og.la basket nike air max',
-        price: 151.05,
-        etat: Etat.Amoche,
-        point: 4,
-        picture:
-            'https://medias.go-sport.com/media/resized/1300x/catalog/product/f6/cc/39/5c/basket-nike-air-max-95-og---307960-108_1_v10.jpeg',
-        picture1:
-            'https://images.fr.shopping.rakuten.com/photo/basket-nike-air-max-97-921826-013-1230178019_ML.jpg',
-        picture2:
-            'https://images.fr.shopping.rakuten.com/photo/basket-nike-air-max-97-qs-at5458-002-1360318653_ML.jpg',
-        picture3:
-            'https://downtownstock.com/40283-large_default/nike-basket-nike-w-air-max-97-lx-ar7621-001.jpg',
-        taille: '39',
-        marque: 'Nike',
-        categorie: 3,
-        sousCategorie: 12)
-  ];
+  String datacode;
+  List<Product> _items = [];
+
+  Future<bool> postProducts(
+      {String description,
+      String marque,
+      String etat,
+      String titre,
+      String taille,
+      double price,
+      int catId,
+      int souCatId,
+      String userid,
+      Boutique boutique,
+      File sampleImage}) async {
+    final String url =
+        "https://appsecom-839d9.firebaseio.com/boutique/${boutique.id}/products.json";
+
+    /**
+       * Envoie de Photo
+       */
+    final StorageReference postImageRef =
+        FirebaseStorage.instance.ref().child("Post Images");
+    var timeKey = DateTime.now();
+    final StorageUploadTask uploadTask =
+        postImageRef.child(timeKey.toString() + ".jpg").putFile(sampleImage);
+
+    var ImageUrl = await (await uploadTask.onComplete).ref.getDownloadURL();
+    String urls = ImageUrl.toString();
+
+    /**
+       * Reception des Donnée du formulaire
+       */
+
+    try {
+      Product products = Product(
+          title: titre,
+          description: description,
+          price: price,
+          etat: etat == 'Neuf' ? Etat.Neuf : Etat.QuasiNeuf,
+          picture: urls,
+          taille: taille,
+          marque: marque,
+          categorie: catId,
+          sousCategorie: souCatId,
+          admin: userid);
+
+      /**
+       * Envoie de donnée
+       */
+      var response = await http.post(url, body: jsonEncode(products.toJson()));
+      Map datas = jsonDecode(response.body);
+      // print('////////////////NAME/**/*/*/*/*/*/*/*/*/*/*');
+      // print(datas['name']);
+
+      //     DatabaseReference databaseReference = FirebaseDatabase.instance.reference();
+
+      // var data = {
+      //   "image": url,
+      //   // "description": _myvalue,
+      //   "time": time,
+      //   "date": date,
+      // };
+      // databaseReference.child('Image').push().set(data);
+
+      String urlProduct =
+          "https://appsecom-839d9.firebaseio.com/products/${datas['name']}.json";
+      var responseProducts =
+          await http.post(urlProduct, body: jsonEncode(products.toJson()));
+      Map datasProdu = jsonDecode(responseProducts.body);
+      return true;
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  List<Product> _productBoutique = [];
+  List<Product> get productBoutique {
+    // if (_showFavotitesOnly) {
+    //   return _items.where((prodItem) => prodItem.isFavorite).toList();
+    // }
+    return [..._productBoutique];
+  }
+
+  /**
+   * GET Boutique
+   */
+
+  Future<List<Product>> getProductsBoutique(Boutique boutique) async {
+    final String url =
+        "https://appsecom-839d9.firebaseio.com/boutique/${boutique.id}/products.json";
+    try {
+      var response = await http.get(url);
+      // print(response.body);
+      if (response.statusCode == 200) {
+        _productBoutique = [];
+        // print('////////// Insérer dans le provider /////////');
+        // print(response.body);
+        Map<String, dynamic> data = json.decode(response.body);
+        int i = 0;
+
+        data.forEach((key, value) {
+          // print(key);
+          _productBoutique.add(Product(
+              id: i++,
+              code: key,
+              title: value['title'],
+              description: value['description'],
+              price: value['price'],
+              etat: value['etat'] == 'Neuf' ? Etat.Neuf : Etat.QuasiNeuf,
+              point: null,
+              picture: value['picture'],
+              picture1: null,
+              picture2: null,
+              picture3: null,
+              marque: value['marque'],
+              categorie: value['categorie'],
+              sousCategorie: value['sousCategorie']));
+          //  _items.add(product);
+        });
+        // print(product.length);
+        // _items.length;
+        // print(product);
+        // data.forEach((key, value) {
+        // print(value['products']);
+        // product = json.decode(value['products']);
+        // print(product);
+        // });
+
+        // product.forEach((key1, value1) {
+        //   print(key1);
+        // });
+        // // print(_item.length);
+        // print('////////// Fin Insertion dans le provider /////////');
+        notifyListeners();
+        // return product;
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 
   // var _showFavotitesOnly = false;
+
+  /**
+   * GET Produit
+   */
+
+  Future<void> getProducts() async {
+    final String url = "https://appsecom-839d9.firebaseio.com/products.json";
+    try {
+      var response = await http.get(url);
+      // print(response.body);
+      if (response.statusCode == 200) {
+        _items = [];
+        // print('////////// Insérer dans le provider /////////');
+        Map<String, dynamic> data = json.decode(response.body);
+        Map<String, dynamic> produits = {};
+        List<String> keys = [];
+        data.forEach((key1, value) {
+          produits.addAll(value);
+          keys.add(key1);
+          // print(key1);
+        });
+        // print(keys);
+        int i = 0;
+        produits.forEach((key, value) {
+          i++;
+          int a = i - 1;
+
+          // print(a);
+          _items.add(Product(
+              isFavorite: value['isFavorite'],
+              id: a,
+              code: keys[a],
+              title: value['title'],
+              description: value['description'],
+              price: value['price'],
+              etat: value['etat'] == 'Neuf' ? Etat.Neuf : Etat.QuasiNeuf,
+              point: null,
+              picture: value['picture'],
+              picture1: null,
+              picture2: null,
+              picture3: null,
+              marque: value['marque'],
+              categorie: value['categorie'],
+              sousCategorie: value['sousCategorie']));
+          // print(value['admin']);
+        });
+        // print('////////// Fin Insertion dans le provider /////////');
+        notifyListeners();
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  /**
+   * ADD FAVORIS
+   */
+
+  Future<bool> postFavoris({String key}) async {
+    bool isFavorite;
+    String email;
+    String urlfinal;
+    String keys;
+    final String urlP =
+        'https://appsecom-839d9.firebaseio.com/products/$key.json';
+
+    try {
+      var response = await http.get(urlP);
+      if (response.statusCode == 200) {
+        _items = [];
+        Map<String, dynamic> data = json.decode(response.body);
+        Product product;
+
+        data.forEach((keye, value) {
+          keys = keye;
+          product = Product(
+              isFavorite: value['isFavorite'] == false ? true : false, code: key
+              // userFavoris:
+              );
+          // print(value);
+          // keys = key;
+        });
+        // print(product.admin);
+        // Map datFav = {'isFavorite': false};
+
+        urlfinal =
+            "https://appsecom-839d9.firebaseio.com/products/$key/$keys/isFavorite.json";
+        var responseFavorisP =
+            await http.put(urlfinal, body: jsonEncode(product.isFavorite));
+        print(responseFavorisP.body);
+        if (product.isFavorite == true) {
+          String urlfavoris =
+              "https://appsecom-839d9.firebaseio.com/products/$key/$keys/userFavoris.json";
+          var responseFavorisPUser =
+              await http.post(urlfavoris, body: jsonEncode(product.toJson()));
+          print(responseFavorisPUser);
+        }
+        // print('///////////BOUTIQUE PRODUITS //////');
+
+        // /**
+        //  * GET PRODUITS BOUTIQUE
+        //  */
+
+        // final String urlB = 'https://appsecom-839d9.firebaseio.com/boutique';
+        // var responseB = await http.get(urlB);
+
+        // Map<String, dynamic> dataB = json.decode(responseB.body);
+        // print(dataB);
+        // dataB.forEach((key, value) {
+        //   print(value);
+        // });
+        return true;
+      }
+    } catch (e) {}
+  }
 
   List<Product> get items {
     // if (_showFavotitesOnly) {

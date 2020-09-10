@@ -14,7 +14,7 @@ class _FavorisState extends State<Favoris> {
   @override
   Widget build(BuildContext context) {
     final productsData = Provider.of<Products>(context, listen: false);
-    print(productsData.favoriteItems);
+    // print(productsData.favoriteItems);
     final dataFavoris = productsData.favoriteItems;
 
     return Scaffold(
@@ -41,7 +41,7 @@ class _FavorisState extends State<Favoris> {
             : ListView.builder(
                 itemCount: dataFavoris.length,
                 itemBuilder: (_, index) {
-                  print(dataFavoris[index].id);
+                  // print(dataFavoris[index].id);
                   final loadedCategrie =
                       Provider.of<Categories>(context, listen: false)
                           .findById(dataFavoris[index].categorie);

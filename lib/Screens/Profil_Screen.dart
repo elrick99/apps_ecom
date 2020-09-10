@@ -1,3 +1,5 @@
+import 'package:apps_ecom/Providers/Models/Boutique.dart';
+import 'package:apps_ecom/Providers/Services/Boutiques.dart';
 import 'package:apps_ecom/Screens/Commandes_Screen.dart';
 import 'package:apps_ecom/Screens/Discussions_Screen.dart';
 import 'package:apps_ecom/Screens/Favoris.dart';
@@ -11,6 +13,7 @@ import 'package:apps_ecom/Widgets/BottomBar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
 
 import 'Boutique_Screen.dart';
 
@@ -119,9 +122,25 @@ class _ProfilScreenState extends State<ProfilScreen> {
     );
   }
 
+  Boutique boutique;
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    final provider = Provider.of<Boutiques>(context);
+    provider.getBoutique();
+  }
+
   @override
   Widget build(BuildContext context) {
-    print(widget.user);
+    final providerB = Provider.of<Boutiques>(context);
+    var etat = providerB.wheremail(widget.user.email);
+    if (etat == true)
+      print('Aucune Boutique');
+    else
+      boutique = providerB.findbyemail(widget.user.email);
+    // print(boutique.description);
+    // print(widget.user);
     return Scaffold(
       backgroundColor: Colors.grey[250],
       appBar: AppBar(
@@ -142,12 +161,14 @@ class _ProfilScreenState extends State<ProfilScreen> {
         decoration: BoxDecoration(),
         child: ListView(
           children: [
-            (widget.user.displayName != null) ? gmailWidget() : emailWidget(),
+            (widget.user.photoUrl != null) ? gmailWidget() : emailWidget(),
             Divider(),
             InkWell(
               onTap: () {
                 Navigator.push(
-                    context, MaterialPageRoute(builder: (_) => MonCompte()));
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => MonCompte(user: widget.user)));
               },
               child: Container(
                 height: MediaQuery.of(context).size.height / 10,
@@ -334,8 +355,20 @@ class _ProfilScreenState extends State<ProfilScreen> {
               ),
             ),
             InkWell(
-              onTap: () => Navigator.push(
-                  context, MaterialPageRoute(builder: (_) => BoutiqueScreen())),
+              onTap: () => (etat == true)
+                  ? Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => BoutiqueScreen(
+                                user: widget.user,
+                              )))
+                  : Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => BottomBarAdmin(
+                                boutique: boutique,
+                                user: widget.user,
+                              ))),
               child: Container(
                 height: MediaQuery.of(context).size.height / 10,
                 width: MediaQuery.of(context).size.width,
@@ -350,7 +383,9 @@ class _ProfilScreenState extends State<ProfilScreen> {
                         color: Colors.black,
                       ),
                       Text(
-                        'Creer Ma Boutique',
+                        (etat == true)
+                            ? 'Creer Ma Boutique'
+                            : 'Acceder à ma Boutique',
                         style: TextStyle(
                           color: Colors.black,
                         ),

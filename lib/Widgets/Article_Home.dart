@@ -15,10 +15,9 @@ class ArticleScreen extends StatelessWidget {
     // print('/////////RELOAD/////////');
     // dataprod.call();
     // print(dataprod);
-    final providerProducts = Provider.of<Products>(context);
-    final dataProduct = providerProducts.items;
-    // final date = dataprod.call();
-    // print(date);
+    // final providerProducts = Provider.of<Products>(context);
+    // final dataProduct = providerProducts.items;
+    // print(dataProduct.length);
     return Scaffold(
       body: Container(
         margin: EdgeInsets.all(10.0),

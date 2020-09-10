@@ -19,7 +19,7 @@ class SousCategories with ChangeNotifier {
               etat: Etat.Neuf,
               point: 4,
               picture:
-                  'https://www.cdiscount.com/pdt2/1/7/5/1/700x700/mp20720175/rw/basket-nike-air-max-97-lx-noir-av1165-001.jpg',
+                  'https://images.fr.shopping.rakuten.com/photo/basket-nike-air-max-97-qs-at5458-002-1360318653_ML.jpg',
               picture1:
                   'https://images.fr.shopping.rakuten.com/photo/basket-nike-air-max-97-921826-013-1230178019_ML.jpg',
               picture2:
@@ -413,7 +413,7 @@ class SousCategories with ChangeNotifier {
               etat: Etat.QuasiNeuf,
               point: 4,
               picture:
-                  'https://www.cdiscount.com/pdt2/1/7/5/1/700x700/mp20720175/rw/basket-nike-air-max-97-lx-noir-av1165-001.jpg',
+                  'https://images.fr.shopping.rakuten.com/photo/basket-nike-air-max-97-qs-at5458-002-1360318653_ML.jpg',
               picture1:
                   'https://images.fr.shopping.rakuten.com/photo/basket-nike-air-max-97-921826-013-1230178019_ML.jpg',
               picture2:

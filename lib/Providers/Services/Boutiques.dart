@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:apps_ecom/Providers/Models/Boutique.dart';
+import 'package:apps_ecom/Providers/Models/Product.dart';
 import 'package:apps_ecom/Providers/Models/User.dart';
+import 'package:apps_ecom/Providers/Services/Users.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
@@ -9,35 +11,143 @@ class Boutiques with ChangeNotifier {
   List<Boutique> _item = [];
   List<Boutique> get item => _item;
 
-  Future<void> postBoutique(
-      String type,
-      String description,
-      String genre,
-      String prenom,
-      String nom,
-      String pays,
-      String adresse,
-      String codePostal,
-      String ville,
-      String telephone) async {
+  Future<void> postBoutique(String type, String description, User user) async {
     Map data = {
+      'iduser': user.id,
       'type': type,
+      'email': user.email,
       'description': description,
-      'genre': genre,
-      'prenom': prenom,
-      'nom': nom,
-      'pays': pays,
-      'adresse': adresse,
-      'codePostal': codePostal,
-      'ville': ville,
-      'telephone': telephone
+      'genre': (user.genre == OptionGenre.Femme) ? 'Femme' : 'Homme',
+      'prenom': user.prenom,
+      'nom': user.nom,
+      'pays': user.pays,
+      'adresse': user.adress1,
+      'codePostal': user.codePostal,
+      'ville': user.ville,
+      'telephone': user.telnumber
     };
-    final String url = "https://appsecom-839d9.firebaseio.com/Boutique.json";
+    print(data);
+    final String url = "https://appsecom-839d9.firebaseio.com/boutique.json";
 
     try {
       var response = await http.post(url, body: jsonEncode(data));
       if (response.statusCode == 200) {
         var data = json.decode(response.body);
+        print('////////// Models /////////');
+        Boutique boutique = Boutique(
+            id: "${data["name"]}",
+            description: description,
+            type: type,
+            user: user);
+        // print('///////// Fin Models /////////');
+        _item.add(boutique);
+        notifyListeners();
+        // print('////////// _ITEM /////////');
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  /**
+   * GET Boutique
+   */
+
+  Future<void> getBoutique() async {
+    final String url = "https://appsecom-839d9.firebaseio.com/boutique.json";
+    try {
+      var response = await http.get(url);
+      // print(response.body);
+      if (response.statusCode == 200) {
+        _item = [];
+        // print('////////// Insérer dans le provider /////////');
+        Map<String, dynamic> data = json.decode(response.body);
+        data.forEach((key, value) {
+          Boutique boutique = Boutique(
+            id: key,
+            description: value['description'],
+            type: value['value'],
+            user: User(
+                id: value['iduser'],
+                nom: value['nom'],
+                prenom: value['prenom'],
+                genre: (value['genre'] == 'Homme')
+                    ? OptionGenre.Homme
+                    : OptionGenre.Femme,
+                telnumber: value['telephone'],
+                email: value['email'],
+                adress1: value['adresse'],
+                codePostal: value['codePostal'],
+                ville: value['ville'],
+                pays: value['pays']),
+          );
+          _item.add(boutique);
+        });
+        // // print(_item.length);
+        // print('////////// Fin Insertion dans le provider /////////');
+        notifyListeners();
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  /**
+   * RECUPERATION DE LA BOUTIQUE DU USER CONNECTE
+   */
+
+  bool wheremail(String email) {
+    return _item
+        .where((element) => element.user.email == email)
+        .toList()
+        .isEmpty;
+    // return _item.firstWhere((boutique) => boutique.user.nom == email);
+  }
+
+  Boutique findbyemail(String email) {
+    return _item.firstWhere((element) => element.user.email == email);
+  }
+
+  /**
+   * AJOUTER UN PRODUIT
+   */
+
+  Future<void> postProduct(
+      Product product, String idBoutique, User user) async {
+    Map data = {
+      'title': product.title,
+      'description': product.description,
+      'price': product.price,
+      'etat': product.etat,
+      'picture': product.picture,
+      'taille': product.taille,
+      'marque': product.marque,
+      'categorie': product.categorie,
+      'sousCategorie': product.sousCategorie,
+    };
+    print(data);
+    final String url = "https://appsecom-839d9.firebaseio.com/boutique.json";
+
+    try {
+      var response = await http.post(url, body: jsonEncode(data));
+      if (response.statusCode == 200) {
+        var data = json.decode(response.body);
+        print('////////// Models /////////');
+        Product products = Product(
+            title: product.title,
+            description: product.description,
+            price: product.price,
+            etat: product.etat,
+            picture: product.picture,
+            taille: product.taille,
+            marque: product.marque,
+            categorie: product.categorie,
+            sousCategorie: product.sousCategorie,
+            admin: user.id);
+        // print('///////// Fin Models /////////');
+        // _item.add(bout);
+        notifyListeners();
+        // print('////////// _ITEM /////////');
       }
     } catch (e) {
       print(e);

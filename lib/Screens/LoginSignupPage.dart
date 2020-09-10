@@ -95,8 +95,8 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
 
   @override
   Widget build(BuildContext context) {
-    print('//////////////// AUTH ///////////////');
-    print(FirebaseAuth.instance.currentUser());
+    // print('//////////////// AUTH ///////////////');
+    // print(FirebaseAuth.instance.currentUser());
     return new Scaffold(
         appBar: AppBar(
           iconTheme: IconThemeData(color: Colors.black),
@@ -243,19 +243,18 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
             shape: new RoundedRectangleBorder(
                 borderRadius: new BorderRadius.circular(30.0)),
             color: Colors.black,
-            child: new Text(
-                 'Creer un compte',
-                style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.w300, color: Colors.grey)),
-            onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (_)=>CreerMonCompte()));
-
+            child: new Text('Creer un compte',
+                style: new TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.w300,
+                    color: Colors.grey)),
+            onPressed: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (_) => CreerMonCompte()));
             }),
       ),
     );
   }
-  
-
- 
 
   Widget showPrimaryButton() {
     return new Padding(
